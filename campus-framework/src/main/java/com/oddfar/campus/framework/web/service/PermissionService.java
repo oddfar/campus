@@ -73,7 +73,7 @@ public class PermissionService {
 
 
 
-    public boolean test() {
+    public boolean resourceAuth() {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         if (StringUtils.isNull(loginUser)) {
             return false;

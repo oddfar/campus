@@ -23,21 +23,21 @@ public class TestController {
     private SysRoleService roleService;
 
     @GetMapping(value = "1", name = "测试1")
-    @PreAuthorize("@ss.test()")
+    @PreAuthorize("@ss.resourceAuth()")
     public R test1() {
 
         return R.ok();
     }
 
     @GetMapping(value = "2", name = "测试2")
-    @PreAuthorize("@ss.test()")
+    @PreAuthorize("@ss.resourceAuth()")
     public R test2() {
 
         return R.ok();
     }
 
     @RequestMapping(value = "3",name = "测试3")
-    @Anonymous
+    @Anonymous//匿名访问，不需要登录和认证
     public R test3(){
 
         return R.ok();
