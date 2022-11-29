@@ -153,7 +153,7 @@ public class ApiResourceScanner implements BeanPostProcessor {
         PreAuthorize preAuthorize = method.getAnnotation(PreAuthorize.class);
         resource.setRequiredPermissionFlag(Constants.NO);
         if (preAuthorize != null) {
-            if (preAuthorize.value().contains("@ss.test")) {
+            if (preAuthorize.value().contains("@ss.resourceAuth")) {
                 resource.setRequiredPermissionFlag(Constants.YES);
             }
         }

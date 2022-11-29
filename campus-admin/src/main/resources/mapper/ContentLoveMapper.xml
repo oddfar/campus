@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oddfar.campus.business.mapper.ContentLoveMapper">
+
+    <resultMap id="BaseResultMap" type="com.oddfar.campus.business.domain.entity.ContentLoveEntity">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <id property="contentId" column="content_id" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,content_id
+    </sql>
+</mapper>

@@ -12,9 +12,9 @@ import com.oddfar.campus.framework.mapper.SysResourceMapper;
 import com.oddfar.campus.framework.mapper.SysRoleMapper;
 import com.oddfar.campus.framework.mapper.SysRoleResourceMapper;
 import com.oddfar.campus.framework.service.SysResourceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,11 +22,11 @@ import java.util.stream.Collectors;
 public class SysResourceServiceImpl extends ServiceImpl<SysResourceMapper, SysResourceEntity> implements SysResourceService {
 
 
-    @Autowired
+    @Resource
     private SysRoleMapper roleMapper;
-    @Autowired
+    @Resource
     private SysResourceMapper resourceMapper;
-    @Autowired
+    @Resource
     private SysRoleResourceMapper roleResourceMapper;
 
     @Override

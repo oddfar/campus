@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.oddfar.campus.common.domain.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
@@ -15,7 +16,9 @@ import java.util.List;
  */
 @Data
 @TableName("campus_comment")
+@EqualsAndHashCode(callSuper = true)
 public class CommentEntity extends BaseEntity {
+    private static final long serialVersionUID = 1L;
 
     /**
      * 评论主键

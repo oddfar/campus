@@ -20,6 +20,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class ContentEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
+
     /**
      * 内容id
      */

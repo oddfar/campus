@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oddfar.campus.business.mapper.CommentMapper">
+
+    <resultMap id="BaseResultMap" type="com.oddfar.campus.business.domain.entity.CommentEntity">
+            <id property="commentId" column="comment_id" jdbcType="BIGINT"/>
+            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="contentId" column="content_id" jdbcType="BIGINT"/>
+            <result property="coContent" column="co_content" jdbcType="VARCHAR"/>
+            <result property="delFlag" column="del_flag" jdbcType="BIT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        comment_id,parent_id,user_id,
+        content_id,co_content,del_flag,
+        create_time,create_user,update_time,
+        update_user
+    </sql>
+</mapper>

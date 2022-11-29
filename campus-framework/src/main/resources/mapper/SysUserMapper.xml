@@ -22,7 +22,6 @@
         <result property="updateTime"   column="update_time"  />
         <result property="remark"       column="remark"       />
         <collection  property="roles"   javaType="java.util.List"   resultMap="RoleResult" />
-<!--        <collection  property="resources"   javaType="java.util.List"   resultMap="ResourceResult" />-->
     </resultMap>
 
     <resultMap id="RoleResult" type="SysRoleEntity">
@@ -34,10 +33,6 @@
     </resultMap>
 
 
-    <resultMap id="ResourceResult" type="SysResourceEntity">
-        <id     property="resourceId"       column="resource_id"        />
-        <result property="resourceCode"     column="resource_code"      />
-    </resultMap>
 
     <sql id="selectUserVo">
         select u.user_id, u.user_name, u.nick_name, u.email, u.avatar, u.phonenumber, u.password, u.sex, u.status, u.del_flag, u.login_ip, u.login_date, u.create_user, u.create_time, u.remark,

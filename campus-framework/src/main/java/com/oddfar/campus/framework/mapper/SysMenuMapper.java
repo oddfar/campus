@@ -66,7 +66,7 @@ public interface SysMenuMapper extends BaseMapperX<SysMenuEntity> {
      * 查询所有角色的权限列表
      * @return SysRolePerms
      */
-    List<SysRoleAuth> selectMenuPermsAll();
+    List<SysRoleAuth> getMenuPermsAll();
 
     /**
      * 根据用户ID查询权限

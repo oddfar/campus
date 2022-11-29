@@ -26,6 +26,12 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
+    <resultMap id="RoleAuthResult" type="com.oddfar.campus.common.domain.model.SysRoleAuth">
+        <result property="roleID" column="role_id"/>
+        <result property="perms" column="perms"/>
+        <result property="resourceCode" column="resource_code"/>
+    </resultMap>
+
     <select id="selectMenuTreeAll" resultType="SysMenuEntity">
         select distinct m.menu_id,
                         m.parent_id,
@@ -88,13 +94,13 @@
           and rm.role_id = #{roleId}
     </select>
 
-    <select id="selectMenuPermsAll" resultType="com.oddfar.campus.common.domain.model.SysRoleAuth">
-        select distinct m.perms, rm.role_id
+    <select id="getMenuPermsAll" resultMap="RoleAuthResult">
+        select m.perms, rm.role_id
         from sys_menu m
                  left join sys_role_menu rm on m.menu_id = rm.menu_id
         where m.status = '0'
-          and m.del_flag = '0'
-          and rm.role_id IS NOT NULL
+          AND m.del_flag = '0'
+          AND rm.role_id IS NOT NULL
     </select>
 
     <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
