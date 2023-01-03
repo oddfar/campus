@@ -24,12 +24,11 @@ import java.util.List;
 
 /**
  * 通用配置
- *
- * @author ruoyi
+ * (根据若依修改)
  */
 @Configuration
 @EnableWebMvc
-public class ResourcesConfig implements WebMvcConfigurer {
+public class MyWebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
@@ -50,7 +49,6 @@ public class ResourcesConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/swagger-ui/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
     }
-
 
     /**
      * json数据处理

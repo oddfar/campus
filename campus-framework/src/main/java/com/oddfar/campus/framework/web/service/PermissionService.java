@@ -71,8 +71,10 @@ public class PermissionService {
         return hasPermissions(loginUser.getPermissions(), permission);
     }
 
-
-
+    /**
+     * 验证用户是否具备某接口
+     * @return 用户是否具备某接口
+     */
     public boolean resourceAuth() {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         if (StringUtils.isNull(loginUser)) {
@@ -90,7 +92,6 @@ public class PermissionService {
         //通过处理链找到对应的HandlerMethod类
         HandlerMethod handler = (HandlerMethod) handlerChain.getHandler();
         String resourceCode = getResourceCode(handler);
-
 
         return hasResources(loginUser.getResources(), resourceCode);
     }

@@ -10,6 +10,7 @@ import com.oddfar.campus.common.utils.SecurityUtils;
 import com.oddfar.campus.common.utils.StringUtils;
 import com.oddfar.campus.framework.service.SysRoleService;
 import com.oddfar.campus.framework.service.SysUserService;
+import com.oddfar.campus.framework.web.service.SysPermissionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class SysUserController {
     private SysUserService userService;
     @Autowired
     private SysRoleService roleService;
+    @Autowired
+    private SysPermissionService permissionService;
 
     @GetMapping("list")
     @Operation(summary = "分页")
@@ -136,7 +139,9 @@ public class SysUserController {
     public R changeStatus(@RequestBody SysUserEntity user) {
 
         userService.checkUserAllowed(user);
-        return R.ok(userService.updateUserStatus(user));
+        userService.updateUserStatus(user);
+        permissionService.resetUserRoleAuthCache(user.getUserId());
+        return R.ok();
     }
 
 

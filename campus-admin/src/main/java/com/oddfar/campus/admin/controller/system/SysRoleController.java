@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/system/role")
-@ApiResource(name = "角色管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "角色管理" , resBizType = ResBizTypeEnum.SYSTEM)
 public class SysRoleController {
 
     @Autowired

@@ -16,13 +16,13 @@ public class TagEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 分类主键
+     * 标签主键
      */
     @TableId
     private Long tagId;
 
     /**
-     * 分类名
+     * 标签名
      */
     private String tagName;
 
@@ -31,5 +31,9 @@ public class TagEntity extends BaseEntity {
      */
     private String description;
 
+    /**
+     * 状态（0正常 1停用）
+     */
+    private String status;
 
 }

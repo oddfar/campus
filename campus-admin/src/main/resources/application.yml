@@ -8,6 +8,7 @@ campus:
 server:
   port: 8160
 
+
 spring:
   application:
     name: oddfar
@@ -40,6 +41,9 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+#    # 对象字段为null不显示
+#    default-property-inclusion: non_null
+
   # 资源信息
   messages:
     # 国际化资源文件路径
@@ -71,7 +75,7 @@ logging:
 #mybatis-plus配置
 mybatis-plus:
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
   #mybatis-plus日志
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -116,7 +116,7 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
      */
     @Override
     public void loadingDictCache() {
-        Map<String, List<SysDictDataEntity>> dictDataMap = dictDataMapper.selectList("status","0").stream().collect(Collectors.groupingBy(SysDictDataEntity::getDictType));
+        Map<String, List<SysDictDataEntity>> dictDataMap = dictDataMapper.selectList("status", "0").stream().collect(Collectors.groupingBy(SysDictDataEntity::getDictType));
         for (Map.Entry<String, List<SysDictDataEntity>> entry : dictDataMap.entrySet()) {
             DictUtils.setDictCache(entry.getKey(), entry.getValue().stream().sorted(Comparator.comparing(SysDictDataEntity::getDictSort)).collect(Collectors.toList()));
         }
@@ -124,10 +124,10 @@ public class SysDictTypeServiceImpl implements SysDictTypeService {
 
     @Override
     public boolean checkDictTypeUnique(SysDictTypeEntity dictType) {
-        SysDictTypeEntity dictTypeEntity = dictTypeMapper.selectOne(new LambdaQueryWrapperX<SysDictTypeEntity>()
-                .eq(SysDictTypeEntity::getDictType, dictType.getDictType())
-                .ne(SysDictTypeEntity::getDictId, dictType.getDictId()));
-        if (StringUtils.isNotNull(dictTypeEntity)) {
+        Long dictId = StringUtils.isNull(dictType.getDictId()) ? -1L : dictType.getDictId();
+        SysDictTypeEntity info = dictTypeMapper.selectOne(new LambdaQueryWrapperX<SysDictTypeEntity>()
+                .eq(SysDictTypeEntity::getDictType, dictType.getDictType()));
+        if (StringUtils.isNotNull(info) && info.getDictId().longValue() != dictId.longValue()) {
             return false;
         }
         return true;

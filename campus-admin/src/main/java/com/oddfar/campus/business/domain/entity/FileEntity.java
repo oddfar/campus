@@ -4,15 +4,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.oddfar.campus.common.domain.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-/**
- * @TableName campus_file
- */
+
 @TableName(value = "campus_file")
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class FileEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
-
 
     /**
      * 文件id

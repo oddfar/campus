@@ -2,15 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.oddfar.campus.business.mapper.CategoryMapper">
+<mapper namespace="com.oddfar.campus.business.mapper.TagMapper">
 
-    <resultMap id="BaseResultMap" type="com.oddfar.campus.business.domain.entity.CategoryEntity">
-            <id property="categoryId" column="category_id" jdbcType="BIGINT"/>
-            <result property="categoryName" column="name" jdbcType="VARCHAR"/>
-            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
-            <result property="slug" column="slug" jdbcType="VARCHAR"/>
+    <resultMap id="BaseResultMap" type="com.oddfar.campus.business.domain.entity.TagEntity">
+            <id property="tagId" column="tag_id" jdbcType="BIGINT"/>
+            <result property="tagName" column="tag_name" jdbcType="VARCHAR"/>
             <result property="description" column="description" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="VARCHAR"/>
             <result property="delFlag" column="del_flag" jdbcType="BIT"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="createUser" column="create_user" jdbcType="BIGINT"/>
@@ -19,8 +16,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        category_id,category_name,parent_id,
-        slug,description,
+        tag_id,tag_name,description,
         del_flag,create_time,create_user,
         update_time,update_user
     </sql>

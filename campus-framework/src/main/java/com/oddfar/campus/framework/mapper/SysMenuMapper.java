@@ -91,8 +91,8 @@ public interface SysMenuMapper extends BaseMapperX<SysMenuEntity> {
      */
     default SysMenuEntity checkMenuNameUnique(SysMenuEntity menu) {
         return selectOne(new LambdaQueryWrapperX<SysMenuEntity>()
-                .eqIfPresent(SysMenuEntity::getMenuName, menu.getMenuName())
-                .eqIfPresent(SysMenuEntity::getParentId, menu.getParentId())
+                .eq(SysMenuEntity::getMenuName, menu.getMenuName())
+                .eq(SysMenuEntity::getParentId, menu.getParentId())
         );
     }
 

@@ -1,18 +1,35 @@
 package com.oddfar.campus.business.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.oddfar.campus.business.domain.entity.CategoryEntity;
 import com.oddfar.campus.common.core.BaseMapperX;
+import com.oddfar.campus.common.core.LambdaQueryWrapperX;
+import com.oddfar.campus.common.domain.PageResult;
 import org.apache.ibatis.annotations.Mapper;
 
-/**
-* @author ningzhiyuan
-* @description 针对表【campus_meta】的数据库操作Mapper
-* @createDate 2022-11-29 14:19:13
-* @Entity generator.domain.MetaEntity
-*/
+import java.util.List;
+
+
 @Mapper
 public interface CategoryMapper extends BaseMapperX<CategoryEntity> {
 
+    default PageResult<CategoryEntity> selectPage(CategoryEntity category) {
+
+        return selectPage(category, new LambdaQueryWrapperX<CategoryEntity>()
+                .likeIfPresent(CategoryEntity::getCategoryName, category.getCategoryName())
+                .eqIfPresent(CategoryEntity::getStatus, category.getStatus())
+        );
+    }
+
+    /**
+     * 获取一级分类
+     *
+     * @return
+     */
+    default List<CategoryEntity> selectPrimary() {
+
+        return selectList(new QueryWrapper<CategoryEntity>().eq("parent_id", 0).eq("status", 0));
+    }
 }
 
 

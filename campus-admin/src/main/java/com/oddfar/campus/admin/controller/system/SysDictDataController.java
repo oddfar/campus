@@ -28,7 +28,7 @@ public class SysDictDataController {
 
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")
-    public R page(SysDictDataEntity dictData) {
+    public R page( SysDictDataEntity dictData) {
         PageResult<SysDictDataEntity> page = dictDataService.page(dictData);
         return R.ok().put(page);
     }

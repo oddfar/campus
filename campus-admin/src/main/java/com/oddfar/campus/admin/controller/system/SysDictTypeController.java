@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/system/dict/type")
-@ApiResource(name = "字典类型管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "字典类型管理" , resBizType = ResBizTypeEnum.SYSTEM)
 public class SysDictTypeController {
 
     @Autowired

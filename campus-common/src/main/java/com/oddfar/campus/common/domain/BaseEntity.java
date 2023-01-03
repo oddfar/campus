@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -52,6 +53,7 @@ public class BaseEntity implements Serializable {
     @Schema(description = "删除标志（0代表未删除，1代表已删除）")
     @TableLogic
     @TableField(fill = FieldFill.INSERT)
+    @JsonIgnore
     private Integer delFlag;
 
     @Schema(description = "其他请求参数")
@@ -62,6 +64,7 @@ public class BaseEntity implements Serializable {
     @NotNull(message = "页码不能为空")
     @Min(value = 1, message = "页码最小值为 1")
     @TableField(exist = false)
+    @JsonIgnore
     private Integer pageNum = PAGE_NUM;
 
     @ApiModelProperty(value = "每页条数，最大值为 100", required = true, example = "10")
@@ -69,6 +72,7 @@ public class BaseEntity implements Serializable {
     @Min(value = 1, message = "每页条数最小值为 1")
     @Max(value = 100, message = "每页条数最大值为 100")
     @TableField(exist = false)
+    @JsonIgnore
     private Integer pageSize = PAGE_SIZE;
 
     public Map<String, Object> getParams()

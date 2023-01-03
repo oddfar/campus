@@ -5,6 +5,7 @@ import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.domain.entity.SysMenuEntity;
 import com.oddfar.campus.common.domain.entity.SysUserEntity;
 import com.oddfar.campus.common.domain.model.LoginBody;
+import com.oddfar.campus.common.domain.model.LoginUser;
 import com.oddfar.campus.common.utils.SecurityUtils;
 import com.oddfar.campus.framework.service.SysMenuService;
 import com.oddfar.campus.framework.web.service.SysLoginService;
@@ -34,12 +35,13 @@ public class SysLoginController {
      */
     @PostMapping("/login")
     public R login(@RequestBody LoginBody loginBody) {
-        R ajax = R.ok();
+        R r = R.ok();
         // 生成令牌
         String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
                 loginBody.getUuid());
-        ajax.put(Constants.TOKEN, token);
-        return ajax;
+        r.put(Constants.TOKEN, token);
+
+        return r;
     }
 
     /**

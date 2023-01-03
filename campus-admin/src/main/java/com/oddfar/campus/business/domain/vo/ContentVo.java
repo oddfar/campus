@@ -1,14 +1,16 @@
 package com.oddfar.campus.business.domain.vo;
 
-import com.oddfar.campus.business.domain.entity.CategoryEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.oddfar.campus.business.domain.entity.TagEntity;
-import com.oddfar.campus.common.domain.entity.SysUserEntity;
 import lombok.Data;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
-public class ContentVo  {
+public class ContentVo {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -42,9 +44,14 @@ public class ContentVo  {
     private Integer type;
 
     /**
-     * 文件id
+     * 文件数量
      */
-    private Long fileNumber;
+    private int fileCount;
+
+    /**
+     * 点赞数量
+     */
+    private Long loveCount;
 
     /**
      * 0不匿名，1匿名
@@ -56,11 +63,23 @@ public class ContentVo  {
      */
     private List<String> fileUrl;
 
+//    private SysUserEntity userEntity;
 
-    private SysUserEntity userEntity;
+//    private CategoryEntity category;
 
-    private CategoryEntity category;
+    private List<TagEntity> tags;
 
-    private TagEntity tag;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
+    private Map<String, Object> params;
+
+    public Map<String, Object> getParams()
+    {
+        if (params == null)
+        {
+            params = new HashMap<>();
+        }
+        return params;
+    }
 }

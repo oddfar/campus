@@ -1,8 +1,10 @@
 package com.oddfar.campus.business.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * 
@@ -23,5 +25,14 @@ public class ContentLoveEntity{
      */
     private Long contentId;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
+    public ContentLoveEntity() {
+    }
+
+    public ContentLoveEntity(Long userId, Long contentId) {
+        this.userId = userId;
+        this.contentId = contentId;
+    }
 }

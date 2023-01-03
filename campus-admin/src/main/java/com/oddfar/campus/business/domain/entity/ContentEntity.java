@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.oddfar.campus.common.domain.BaseEntity;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -30,45 +32,43 @@ public class ContentEntity extends BaseEntity {
     /**
      * 用户id
      */
-    @ApiModelProperty(value = "用户id")
-    @TableField("user_id")
     private Long userId;
 
     /**
      * 类别id
      */
-    @TableField("category_id")
+    @NotNull(message = "类别不能为空")
     private Long categoryId;
 
     /**
      * 内容
      */
-    @TableField("content")
+    @NotBlank(message = "内容不能为空")
+    @Size(min = 0, max = 1000, message = "内容长度不能超过1000个字符")
     private String content;
 
     /**
-     * 状态：0审核,1正常,2下架
+     * 状态：0审核,1正常,2下架,3拒绝（审核不通过）
      */
-    @TableField("status")
     private Integer status;
 
     /**
      * 类型：0文字,1图片,2视频
      */
-    @TableField("type")
     private Integer type;
 
+    /**
+     * 文件数量
+     */
+    private Long fileCount;
 
     /**
-     * 文件id
+     * 点赞数量
      */
-    @TableField("file_number")
-    private Long fileNumber;
-
+    private Long loveCount;
     /**
      * 0不匿名，1匿名
      */
-    @TableField("is_anonymous")
     private Integer isAnonymous;
 
     /**

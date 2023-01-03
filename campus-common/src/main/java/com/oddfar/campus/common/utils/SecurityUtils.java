@@ -1,8 +1,10 @@
 package com.oddfar.campus.common.utils;
 
 import com.oddfar.campus.common.constant.HttpStatus;
+import com.oddfar.campus.common.constant.UserConstants;
 import com.oddfar.campus.common.domain.model.LoginUser;
 import com.oddfar.campus.common.exception.ServiceException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,12 +43,30 @@ public class SecurityUtils {
      **/
     public static LoginUser getLoginUser() {
         try {
-            return (LoginUser) getAuthentication().getPrincipal();
+            LoginUser loginUser = (LoginUser) getAuthentication().getPrincipal();
+            //用户不正常
+            if(!loginUser.getUser().getStatus().equals(UserConstants.NORMAL)){
+                throw new ServiceException("用户被禁止", HttpStatus.FORBIDDEN);
+            }
+            return loginUser;
         } catch (Exception e) {
             throw new ServiceException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
         }
     }
 
+    /**
+     * 是否登录，true登录
+     * @return
+     */
+    public static boolean isLogin(){
+        Authentication auth =getAuthentication();
+        if (auth instanceof AnonymousAuthenticationToken) {
+            return false;
+        }else {
+            return true;
+        }
+
+    }
     /**
      * 获取Authentication
      */

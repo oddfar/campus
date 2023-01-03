@@ -9,6 +9,7 @@ import com.oddfar.campus.framework.service.SysConfigService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/system/config")
-@ApiResource(name = "参数配置管理", resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "参数配置管理" , resBizType = ResBizTypeEnum.SYSTEM)
 public class SysConfigController {
     @Autowired
     private SysConfigService configService;
 
-    @GetMapping(value = "page", name = "分页")
+    @GetMapping(value = "page" , name = "分页")
     @PreAuthorize("@ss.hasPermi('system:config:list')")
     public R page(SysConfigEntity sysConfigEntity) {
         PageResult<SysConfigEntity> page = configService.page(sysConfigEntity);
@@ -49,7 +50,7 @@ public class SysConfigController {
     @PostMapping
     @Operation(summary = "保存")
     @PreAuthorize("@ss.hasPermi('system:config:add')")
-    public R add(@RequestBody SysConfigEntity config) {
+    public R add(@Validated @RequestBody SysConfigEntity config) {
         if (!configService.checkConfigKeyUnique(config)) {
             return R.error("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
@@ -60,7 +61,7 @@ public class SysConfigController {
     @PutMapping
     @Operation(summary = "修改")
     @PreAuthorize("@ss.hasPermi('system:config:edit')")
-    public R edit(@RequestBody SysConfigEntity config) {
+    public R edit(@Validated @RequestBody SysConfigEntity config) {
         if (!configService.checkConfigKeyUnique(config)) {
             return R.error("修改参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }

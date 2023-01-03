@@ -69,7 +69,6 @@ public class SysRoleEntity extends BaseEntity {
      */
     private String status;
 
-
     /**
      * 用户是否存在此角色标识 默认不存在
      */

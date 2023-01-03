@@ -5,57 +5,97 @@
 <mapper namespace="com.oddfar.campus.business.mapper.ContentMapper">
 
     <resultMap id="BaseResultMap" type="com.oddfar.campus.business.domain.entity.ContentEntity">
-            <id property="contentId" column="content_id" jdbcType="BIGINT"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
-            <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="fileNumber" column="file_number" jdbcType="BIGINT"/>
-            <result property="isAnonymous" column="is_anonymous" jdbcType="TINYINT"/>
-            <result property="delFlag" column="del_flag" jdbcType="BIT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="createUser" column="create_user" jdbcType="BIGINT"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="updateUser" column="update_user" jdbcType="BIGINT"/>
-           <collection property="fileUrl" column="file_url"  javaType="java.util.List"  />
-    </resultMap>
-
-    <resultMap id="ContentVo" type="com.oddfar.campus.business.domain.vo.ContentVo">
         <id property="contentId" column="content_id" jdbcType="BIGINT"/>
         <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="TINYINT"/>
         <result property="type" column="type" jdbcType="TINYINT"/>
-        <result property="fileNumber" column="file_number" jdbcType="BIGINT"/>
+        <result property="fileCount" column="file_count" jdbcType="TINYINT"/>
+        <result property="loveCount" column="love_count" jdbcType="BIGINT"/>
         <result property="isAnonymous" column="is_anonymous" jdbcType="TINYINT"/>
-        <collection property="fileUrl" column="file_url"  javaType="java.util.List"  />
+        <result property="delFlag" column="del_flag" jdbcType="BIT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="BIGINT"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="BIGINT"/>
+        <collection property="fileUrl" column="file_url" javaType="java.util.List"/>
+    </resultMap>
+
+    <resultMap id="ContentVoResult" type="ContentVo">
+        <id property="contentId" column="content_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="fileCount" column="file_count" jdbcType="TINYINT"/>
+        <result property="loveCount" column="love_count" jdbcType="BIGINT"/>
+        <result property="isAnonymous" column="is_anonymous" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <association property="params" javaType="java.util.Map" >
+            <result property="userId" column="user_id"/>
+            <result property="userName" column="user_name"/>
+            <result property="nickName" column="nick_name"/>
+            <result property="avatar" column="avatar"/>
+            <result property="categoryId" column="category_id"/>
+            <result property="categoryName" column="category_name"/>
+        </association>
+        <!--        <association property="userEntity"  javaType="SysUserEntity">-->
+        <!--            <id property="userId" column="user_id"/>-->
+        <!--            <result property="userName" column="user_name"/>-->
+        <!--            <result property="nickName" column="nick_name"/>-->
+        <!--        </association>-->
+        <!--        <association property="category"  javaType="CategoryEntity">-->
+        <!--            <id property="categoryId" column="category_id"/>-->
+        <!--            <result property="categoryName" column="category_name"/>-->
+        <!--        </association>-->
+
+        <collection property="tags" javaType="java.util.List" resultMap="tagResult"/>
+    </resultMap>
+
+
+    <resultMap id="tagResult" type="TagEntity">
+        <id property="tagId" column="tag_id"/>
+        <result property="tagName" column="tag_name"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        content_id,user_id,category_id,
+        content_id
+        ,user_id,category_id,
         content,status,type,
-        file_number,is_anonymous,del_flag,
+        file_count,is_anonymous,del_flag,
         create_time,create_user,update_time,
         update_user
     </sql>
 
     <sql id="selectContent">
-        select c.content_id,c.user_id,c.category_id, c.content,c.status,c.type,c.file_number,c.is_anonymous,c.del_flag, c.create_time,c.create_user,
+        select c.content_id,
+               c.user_id,
+               c.category_id,
+               c.content,
+               c.status,
+               c.type,
+               c.file_count,
+               c.love_count,
+               c.is_anonymous,
+               c.del_flag,
+               c.create_time,
+               c.create_user,
                cc.category_name,
-               u.user_name,u.nick_name,
-               ct.tag_id,t.tag_name
+               u.user_name,
+               u.nick_name,
+               u.avatar,
+               ct.tag_id,
+               t.tag_name
         from campus_content c
                  left join campus_category cc on cc.category_id = c.category_id
                  left join sys_user u on u.user_id = c.user_id
                  left join campus_content_tag ct on ct.content_id = c.content_id
-                 left join campus_tag t on t.tag_id = ct.tag_id
+                 left join campus_tag t on t.tag_id = ct.tag_id and t.status = '0' and t.del_flag = '0'
     </sql>
 
-    <select id="selectContentList" parameterType="com.oddfar.campus.business.domain.entity.ContentEntity"
-            resultType="com.oddfar.campus.business.domain.vo.ContentVo">
-        <include refid="selectContent"></include>
+    <sql id="selectContentWhere">
         where c.del_flag = '0'
         <if test="params.userName != null and params.userName != ''">
             AND u.user_name like concat('%', #{params.userName}, '%')
@@ -63,20 +103,23 @@
         <if test="params.nickName != null and params.nickName != ''">
             AND u.nick_name like concat('%', #{params.nickName}, '%')
         </if>
-        <if test="categoryId != null and categoryId != ''">
-            AND c.category_id = #{categoryId}
+        <if test="params.categoryIds != null ">
+            AND c.category_id in
+            <foreach collection="params.categoryIds" item="categoryId" open="(" separator="," close=")">
+                #{categoryId}
+            </foreach>
         </if>
         <if test="content != null and content != ''">
             AND c.content like concat('%', #{content}, '%')
         </if>
-        <if test="status != null and status != ''">
-            AND c.status =  #{status}
+        <if test="status != null">
+            AND c.status = #{status}
         </if>
-        <if test="type != null and type != ''">
-            AND c.type =  #{type}
+        <if test="type != null">
+            AND c.type = #{type}
         </if>
-        <if test="isAnonymous != null and isAnonymous != ''">
-            AND c.is_anonymous =  #{isAnonymous}
+        <if test="isAnonymous != null">
+            AND c.is_anonymous = #{isAnonymous}
         </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
             AND date_format(c.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
@@ -84,6 +127,26 @@
         <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
             AND date_format(c.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
+
+    </sql>
+
+    <select id="selectContentList" parameterType="com.oddfar.campus.business.domain.entity.ContentEntity"
+            resultMap="ContentVoResult">
+        <include refid="selectContent"></include>
+        <include refid="selectContentWhere"></include>
+        order by c.status asc,c.create_time DESC
+        limit #{pageNum},#{pageSize}
+    </select>
+
+    <select id="selectContentByContent" parameterType="com.oddfar.campus.business.domain.entity.ContentEntity"
+            resultMap="ContentVoResult">
+        <include refid="selectContent"></include>
+        <include refid="selectContentWhere"></include>
+        <if test="contentId != null and contentId != ''">
+            AND c.content_id = #{contentId}
+        </if>
+
+
     </select>
 
 </mapper>
