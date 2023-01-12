@@ -34,7 +34,7 @@ public class ContentVo {
     private String content;
 
     /**
-     * 状态：0审核,1正常,2下架
+     * 状态：0审核,1正常,2下架,3拒绝（审核不通过）
      */
     private Integer status;
 

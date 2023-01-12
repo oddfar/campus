@@ -59,13 +59,17 @@ public class SysConfigExpander {
         return null;
     }
 
-
     /**
      * 获取头像上传路径
      */
-    public static String getAvatarPath()
-    {
+    public static String getAvatarPath() {
         return getFileProfile() + "/avatar";
     }
 
+    /**
+     * 获取校园墙文件上传路径
+     */
+    public static String getCampusFilePath() {
+        return getFileProfile() + "/CampusFile";
+    }
 }

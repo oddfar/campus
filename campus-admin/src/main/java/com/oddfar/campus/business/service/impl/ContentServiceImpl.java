@@ -3,9 +3,11 @@ package com.oddfar.campus.business.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.oddfar.campus.business.domain.entity.CategoryEntity;
 import com.oddfar.campus.business.domain.entity.ContentEntity;
+import com.oddfar.campus.business.domain.vo.CampusFileVo;
 import com.oddfar.campus.business.domain.vo.ContentVo;
 import com.oddfar.campus.business.mapper.ContentLoveMapper;
 import com.oddfar.campus.business.mapper.ContentMapper;
+import com.oddfar.campus.business.service.CampusFileService;
 import com.oddfar.campus.business.service.CategoryService;
 import com.oddfar.campus.business.service.ContentService;
 import com.oddfar.campus.common.domain.PageResult;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -27,6 +31,8 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
     private CategoryService categoryService;
     @Resource
     private ContentLoveMapper contentLoveMapper;
+    @Resource
+    private CampusFileService fileService;
 
     @Override
     public PageResult<ContentVo> page(ContentEntity contentEntity) {
@@ -34,6 +40,8 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
         setContentEntity(contentEntity);
 
         List<ContentVo> contentVos = contentMapper.selectContentList(contentEntity);
+        //获取文件url列表
+        setFileListByContentVos(contentVos);
 
         return new PageResult<ContentVo>(contentVos, contentVos.size());
     }
@@ -47,14 +55,16 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
 
     @Override
     public ContentVo selectContentByContentId(ContentEntity contentEntity) {
-
-        return contentMapper.selectContentByContent(contentEntity);
+        ContentVo contentVo = contentMapper.selectContentByContent(contentEntity);
+        //设置文件
+        setFileByContentEntity(contentVo);
+        return contentVo;
     }
 
     @Override
     public int updateContent(ContentEntity content) {
 
-        return 0;
+        return contentMapper.updateById(content);
     }
 
 
@@ -82,6 +92,37 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
             categoryIds.add(category.getCategoryId());
             contentEntity.getParams().put("categoryIds", categoryIds);
         }
+    }
+
+    /**
+     * 设置信息墙列表的文件url列表
+     * @param contentVos
+     */
+    private void setFileListByContentVos(List<ContentVo> contentVos){
+
+        List<Long> contentIds = contentVos.stream().map(ContentVo::getContentId).collect(Collectors.toList());
+        //获取文件
+        List<CampusFileVo> contentFiles = fileService.getContentFile(contentIds);
+        //把文件list转map
+        Map<Long, CampusFileVo> fileVoMap =
+                contentFiles.stream().collect(Collectors.toMap(CampusFileVo::getContentId, Function.identity()));
+        //文件信息加入到ContentVo集合
+        contentVos.forEach(vo -> {
+            if(fileVoMap.containsKey(vo.getContentId())){
+                vo.setFileUrl(fileVoMap.get(vo.getContentId()).getFileUrls());
+            }
+        });
+
+    }
+
+    /**
+     * 设置信息墙的文件
+     * @param contentVo
+     */
+    private void setFileByContentEntity(ContentVo contentVo){
+        CampusFileVo contentFile = fileService.getContentFile(contentVo.getContentId());
+
+        contentVo.setFileUrl(contentFile.getFileUrls());
     }
 
 }

@@ -9,10 +9,8 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
-* 123
 *
-* @author 致远 oddfar@163.com
-* @since 1.0.0 2022-09-24
+* @author 致远
 */
 @Mapper
 public interface SysUserConvert {

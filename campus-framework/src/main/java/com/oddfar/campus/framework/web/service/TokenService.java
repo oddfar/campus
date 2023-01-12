@@ -57,6 +57,20 @@ public class TokenService {
      * @return 用户信息
      */
     public LoginUser getLoginUser(HttpServletRequest request) {
+        LoginUserToken loginUserToken = getLoginUserToken(request);
+        if (StringUtils.isNotNull(loginUserToken)){
+            LoginUser user = redisCache.getCacheObject(getLoginKey(loginUserToken.getUserId()));
+            return user;
+        }
+        return null;
+    }
+
+    /**
+     * 获取用户身份信息
+     *
+     * @return 用户信息
+     */
+    public LoginUserToken getLoginUserToken(HttpServletRequest request) {
         // 获取请求携带的令牌
         String token = getToken(request);
         if (StringUtils.isNotEmpty(token)) {
@@ -67,9 +81,9 @@ public class TokenService {
                 String userKey = getTokenKey(uuid);
                 //获取用户id
                 LoginUserToken loginUserToken = redisCache.getCacheObject(userKey);
-                LoginUser user = redisCache.getCacheObject(getLoginKey(loginUserToken.getUserId()));
 
-                return user;
+
+                return loginUserToken;
             } catch (Exception e) {
             }
         }

@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * 监听项目初始化完毕，导入资源信息
+ * 监听项目初始化完毕，导入资源信息(没用，暂存下代码)
  */
 //@Component  implements ApplicationListener<ApplicationReadyEvent>
 public class ResourceReportListener  {

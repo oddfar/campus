@@ -1,5 +1,7 @@
 package com.oddfar.campus.business.controller.web;
 
+import com.oddfar.campus.business.domain.entity.CampusFileEntity;
+import com.oddfar.campus.business.service.CampusFileService;
 import com.oddfar.campus.business.service.ContentLoveService;
 import com.oddfar.campus.business.service.ContentService;
 import com.oddfar.campus.common.annotation.ApiResource;
@@ -12,7 +14,10 @@ import com.oddfar.campus.framework.api.file.MimeTypeUtils;
 import com.oddfar.campus.framework.expander.SysConfigExpander;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.oddfar.campus.common.utils.SecurityUtils.getLoginUser;
@@ -31,6 +36,8 @@ public class UserActionController {
     private ContentService contentService;
     @Autowired
     private ContentLoveService contentLoveService;
+    @Autowired
+    private CampusFileService campusFileService;
 
     /**
      * 点赞
@@ -48,13 +55,14 @@ public class UserActionController {
      * 文件上传
      */
     @PreAuthorize("@ss.resourceAuth()")
-    @GetMapping(value = "/fileUpload",name = "文件上传")
+    @GetMapping(value = "/fileUpload", name = "文件上传")
     public R avatar(MultipartFile file) throws Exception {
         if (!file.isEmpty()) {
             LoginUser loginUser = getLoginUser();
-            String location = FileUploadUtils.upload(SysConfigExpander.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
-
-
+            String location = FileUploadUtils.upload(SysConfigExpander.getCampusFilePath(), file, MimeTypeUtils.IMAGE_VIDEO_EXTENSION);
+            CampusFileEntity campusFileEntity = new CampusFileEntity(loginUser.getUserId(), location);
+            campusFileService.save(campusFileEntity);
+            return R.ok("上传成功");
 
         }
         return R.error("上传异常");

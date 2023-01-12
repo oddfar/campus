@@ -7,8 +7,8 @@ import com.oddfar.campus.business.domain.vo.ContentVo;
 import java.util.List;
 
 /**
-* @author 致远
-*/
+ * @author 致远
+ */
 public interface ContentLoveService extends IService<ContentLoveEntity> {
 
     /**
@@ -22,11 +22,12 @@ public interface ContentLoveService extends IService<ContentLoveEntity> {
 
     /**
      * 用户是否点赞
+     *
      * @param userId
      * @param contentId
      * @return 真为点赞
      */
-    boolean isLove(Long userId,Long contentId);
+    boolean isLove(Long userId, Long contentId);
 
     /**
      * 获取点赞信息列表

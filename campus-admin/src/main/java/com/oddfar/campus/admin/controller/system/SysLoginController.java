@@ -5,7 +5,6 @@ import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.domain.entity.SysMenuEntity;
 import com.oddfar.campus.common.domain.entity.SysUserEntity;
 import com.oddfar.campus.common.domain.model.LoginBody;
-import com.oddfar.campus.common.domain.model.LoginUser;
 import com.oddfar.campus.common.utils.SecurityUtils;
 import com.oddfar.campus.framework.service.SysMenuService;
 import com.oddfar.campus.framework.web.service.SysLoginService;
@@ -13,7 +12,8 @@ import com.oddfar.campus.framework.web.service.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping
@@ -40,7 +40,6 @@ public class SysLoginController {
         String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
                 loginBody.getUuid());
         r.put(Constants.TOKEN, token);
-
         return r;
     }
 

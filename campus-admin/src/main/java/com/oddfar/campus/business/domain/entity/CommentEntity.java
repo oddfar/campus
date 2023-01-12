@@ -1,13 +1,10 @@
 package com.oddfar.campus.business.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.oddfar.campus.common.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.List;
 
 /**
  * campus_comment评论表
@@ -37,6 +34,16 @@ public class CommentEntity extends BaseEntity {
     private Long userId;
 
     /**
+     * 所回复目标评论的用户id
+     */
+    private Long toUserId;
+
+    /**
+     * 所属的一级评论id
+     */
+    private Long oneLevelId;
+
+    /**
      * 内容id
      */
     private Long contentId;
@@ -47,15 +54,13 @@ public class CommentEntity extends BaseEntity {
     private String coContent;
 
     /**
-     * 是否包含子节点
+     * 评论时的ip
      */
-    @TableField(exist = false)
-    private boolean hasChildren;
+    private String ip;
 
     /**
-     * 子节点
+     * 评论时的地址
      */
-    @TableField(exist = false)
-    private List<CommentEntity> children;
+    private String address;
 
 }

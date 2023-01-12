@@ -6,13 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
-* 123
 *
-* @author 致远 oddfar@163.com
-* @since 1.0.0 2022-09-24
+* @author 致远
 */
 @Data
-@Schema(description = "123")
 @EqualsAndHashCode(callSuper = true)
 public class SysUserVO extends PageParam  {
 	private static final long serialVersionUID = 1L;
