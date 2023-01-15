@@ -27,6 +27,8 @@ public class ContentController {
     @GetMapping(value = "list", name = "分页")
     @PreAuthorize("@ss.resourceAuth()")
     public R page(ContentEntity contentEntity) {
+
+
         PageResult<ContentVo> page = contentService.page(contentEntity);
 
         return R.ok().put(page);

@@ -10,7 +10,7 @@ import java.util.List;
 public interface SysRoleMapper extends BaseMapperX<SysRoleEntity> {
     default PageResult<SysRoleEntity> selectPage(SysRoleEntity role) {
 
-        return selectPage(role, new LambdaQueryWrapperX<SysRoleEntity>()
+        return selectPage(new LambdaQueryWrapperX<SysRoleEntity>()
                 .likeIfPresent(SysRoleEntity::getRoleName, role.getRoleName())
                 .likeIfPresent(SysRoleEntity::getRoleKey, role.getRoleKey())
                 .eqIfPresent(SysRoleEntity::getStatus, role.getStatus())

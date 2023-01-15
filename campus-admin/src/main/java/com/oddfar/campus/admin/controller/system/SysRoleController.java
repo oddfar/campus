@@ -1,6 +1,7 @@
 package com.oddfar.campus.admin.controller.system;
 
 import com.oddfar.campus.common.annotation.ApiResource;
+import com.oddfar.campus.common.core.page.PageUtils;
 import com.oddfar.campus.common.domain.PageResult;
 import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.domain.entity.SysRoleEntity;
@@ -127,8 +128,9 @@ public class SysRoleController {
     @PreAuthorize("@ss.hasPermi('system:role:list')")
     @GetMapping("/authUser/allocatedList")
     public R allocatedList(SysUserEntity user) {
+        PageUtils.startPage();
         List<SysUserEntity> list = userService.selectAllocatedList(user);
-        return R.ok().put(new PageResult<SysUserEntity>(list, list.size()));
+        return R.ok().put(PageUtils.getPageResult(list));
     }
 
     /**
@@ -137,8 +139,9 @@ public class SysRoleController {
     @PreAuthorize("@ss.hasPermi('system:role:list')")
     @GetMapping("/authUser/unallocatedList")
     public R unallocatedList(SysUserEntity user) {
+        PageUtils.startPage();
         List<SysUserEntity> list = userService.selectUnallocatedList(user);
-        return R.ok().put(new PageResult<SysUserEntity>(list, list.size()));
+        return R.ok().put(PageUtils.getPageResult(list));
     }
 
     /**

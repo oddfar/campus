@@ -34,6 +34,7 @@
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <jwt.version>0.9.1</jwt.version>
+        <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -53,6 +54,13 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.boot.version}</version>
+            </dependency>
+
+            <!-- mybatis pagehelper 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.boot.version}</version>
             </dependency>
 
             <!-- Swagger3依赖 -->

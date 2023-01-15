@@ -15,7 +15,7 @@ public interface CategoryMapper extends BaseMapperX<CategoryEntity> {
 
     default PageResult<CategoryEntity> selectPage(CategoryEntity category) {
 
-        return selectPage(category, new LambdaQueryWrapperX<CategoryEntity>()
+        return selectPage(new LambdaQueryWrapperX<CategoryEntity>()
                 .likeIfPresent(CategoryEntity::getCategoryName, category.getCategoryName())
                 .eqIfPresent(CategoryEntity::getStatus, category.getStatus())
         );

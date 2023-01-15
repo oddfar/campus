@@ -8,6 +8,7 @@ import com.oddfar.campus.business.enums.CampusBizCodeEnum;
 import com.oddfar.campus.business.mapper.CommentMapper;
 import com.oddfar.campus.business.mapper.ContentMapper;
 import com.oddfar.campus.business.service.CommentService;
+import com.oddfar.campus.common.core.page.PageUtils;
 import com.oddfar.campus.common.domain.PageResult;
 import com.oddfar.campus.common.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,26 +33,39 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentEntity
     }
 
     @Override
-    public List<CommentVo> selectOneLevel(CommentEntity comment) {
+    public PageResult<CommentVo> selectOneLevel(CommentEntity comment) {
         //设置分页
-        int firstIndex = (comment.getPageNum() - 1) * comment.getPageSize();
-        comment.setPageNum(firstIndex);
+//        int firstIndex = (comment.getPageNum() - 1) * comment.getPageSize();
+//        comment.setPageNum(firstIndex);
+
         ContentEntity content = contentMapper.selectById(comment.getContentId());
 
-        if (content!=null){
+        if (content != null) {
+            //开始分页，固定大小5
+            PageUtils.startPage(5);
             //获取一级评论
             List<CommentVo> oneLevel = commentMapper.getOneLevel(comment);
-
-            List<Long> commentIdList = oneLevel.stream().map(CommentVo::getCommentId).collect(Collectors.toList());
-            //查询一级评论子评论有作者的
-            List<CommentVo> oneLevelChild = commentMapper.getOneLevelChild(commentIdList, content.getUserId());
-            oneLevel.addAll(oneLevelChild);
-
-            return oneLevel;
-        }else {
+            //查询一级评论中的子评论有作者的
+            if (oneLevel.size() > 0) {
+                List<Long> commentIdList = oneLevel.stream().map(CommentVo::getCommentId).collect(Collectors.toList());
+                List<CommentVo> oneLevelChild = commentMapper.getOneLevelChildHaveAuthor(commentIdList, content.getUserId());
+                oneLevel.addAll(oneLevelChild);
+            }
+            //封装分页数据
+            return PageUtils.getPageResult(oneLevel);
+        } else {
             return null;
         }
 
+    }
+
+    @Override
+    public PageResult<CommentVo> selectOneLevelChild(CommentEntity comment) {
+        //开始分页，固定大小5
+        PageUtils.startPage(5);
+        List<CommentVo> oneLevelChild = commentMapper.getOneLevelChild(comment);
+        //封装分页数据
+        return PageUtils.getPageResult(oneLevelChild);
     }
 
     @Override

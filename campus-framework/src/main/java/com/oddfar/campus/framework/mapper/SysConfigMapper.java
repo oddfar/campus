@@ -9,7 +9,7 @@ import com.oddfar.campus.common.domain.entity.SysConfigEntity;
 public interface SysConfigMapper extends BaseMapperX<SysConfigEntity> {
     default PageResult<SysConfigEntity> selectPage(SysConfigEntity config) {
 
-        return selectPage(config, new LambdaQueryWrapperX<SysConfigEntity>()
+        return selectPage(new LambdaQueryWrapperX<SysConfigEntity>()
                 .likeIfPresent(SysConfigEntity::getConfigName, config.getConfigName())
                 .likeIfPresent(SysConfigEntity::getConfigKey, config.getConfigKey())
                 .eqIfPresent(SysConfigEntity::getGroupCode, config.getGroupCode())
@@ -35,7 +35,6 @@ public interface SysConfigMapper extends BaseMapperX<SysConfigEntity> {
 
     /**
      * 校验参数键名是否唯一
-     *
      */
     default SysConfigEntity checkConfigKeyUnique(SysConfigEntity config) {
         return selectOne(new LambdaQueryWrapperX<SysConfigEntity>()

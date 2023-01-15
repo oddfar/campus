@@ -38,6 +38,7 @@ spring:
       max-file-size: 20MB
       # 设置总上传的文件大小
       max-request-size: 20MB
+  #MyWebMvcConfig中开启@EnableWebMvc则失效
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -86,6 +87,9 @@ mybatis-plus:
       logic-not-delete-value: 0
   type-aliases-package: com.oddfar.**.domain
 
+# PageHelper分页插件
+pagehelper:
+  helperDialect: mysql
 
 # Swagger配置
 swagger:

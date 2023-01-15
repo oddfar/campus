@@ -2,7 +2,7 @@ package com.oddfar.campus.framework.listener;
 
 import com.oddfar.campus.common.domain.entity.SysResourceEntity;
 import com.oddfar.campus.framework.service.SysResourceService;
-import io.swagger.annotations.Api;
+//import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -71,8 +71,8 @@ public class ResourceReportListener  {
 
                 resource.setClassName(aClass.getSimpleName());
                 //获取注解@Api，并设置模块名称
-                Api api = AnnotationUtils.getAnnotation(aClass, Api.class);
-                resource.setModularName(api.value());
+//                Api api = AnnotationUtils.getAnnotation(aClass, Api.class);
+//                resource.setModularName(api.value());
 
                 resource.setMethodName(m.getName());
                 //设置注解其他内容

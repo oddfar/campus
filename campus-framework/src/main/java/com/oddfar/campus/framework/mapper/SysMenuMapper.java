@@ -13,7 +13,7 @@ import java.util.List;
 public interface SysMenuMapper extends BaseMapperX<SysMenuEntity> {
     default PageResult<SysMenuEntity> selectPage(SysMenuEntity sysMenuEntity) {
 
-        return selectPage(sysMenuEntity, new LambdaQueryWrapperX<SysMenuEntity>());
+        return selectPage(new LambdaQueryWrapperX<SysMenuEntity>());
     }
 
     /**
@@ -64,6 +64,7 @@ public interface SysMenuMapper extends BaseMapperX<SysMenuEntity> {
 
     /**
      * 查询所有角色的权限列表
+     *
      * @return SysRolePerms
      */
     List<SysRoleAuth> getMenuPermsAll();

@@ -5,8 +5,6 @@ import com.oddfar.campus.business.domain.entity.CommentEntity;
 import com.oddfar.campus.business.domain.vo.CommentVo;
 import com.oddfar.campus.common.domain.PageResult;
 
-import java.util.List;
-
 
 public interface CommentService extends IService<CommentEntity> {
 
@@ -18,7 +16,19 @@ public interface CommentService extends IService<CommentEntity> {
      */
     PageResult<CommentEntity> page(CommentEntity comment);
 
-    List<CommentVo> selectOneLevel(CommentEntity comment);
+    /**
+     * 分页查询一级评论列表
+     * @param comment
+     * @return
+     */
+    PageResult<CommentVo> selectOneLevel(CommentEntity comment);
+
+    /**
+     * 查询一级评论子评论
+     * @param comment
+     * @return
+     */
+    PageResult<CommentVo> selectOneLevelChild(CommentEntity comment);
 
     /**
      * 新增评论

@@ -135,7 +135,6 @@
         <include refid="selectContent"></include>
         <include refid="selectContentWhere"></include>
         order by c.status asc,c.create_time DESC
-        limit #{pageNum},#{pageSize}
     </select>
 
     <select id="selectContentByContent" parameterType="com.oddfar.campus.business.domain.entity.ContentEntity"

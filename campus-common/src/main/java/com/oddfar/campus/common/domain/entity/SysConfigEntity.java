@@ -3,8 +3,6 @@ package com.oddfar.campus.common.domain.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.oddfar.campus.common.domain.BaseEntity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,13 +14,11 @@ import javax.validation.constraints.Size;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(description = "sys_config参数配置表")
 @TableName("sys_config")
 public class SysConfigEntity extends BaseEntity  {
     private static final long serialVersionUID = 1L;
 
     //    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    @ApiModelProperty(value = "配置id")
     @TableId("config_id")
     private Long configId;
 

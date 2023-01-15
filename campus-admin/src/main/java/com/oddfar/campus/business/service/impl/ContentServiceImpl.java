@@ -10,6 +10,7 @@ import com.oddfar.campus.business.mapper.ContentMapper;
 import com.oddfar.campus.business.service.CampusFileService;
 import com.oddfar.campus.business.service.CategoryService;
 import com.oddfar.campus.business.service.ContentService;
+import com.oddfar.campus.common.core.page.PageUtils;
 import com.oddfar.campus.common.domain.PageResult;
 import org.springframework.stereotype.Service;
 
@@ -36,14 +37,16 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
 
     @Override
     public PageResult<ContentVo> page(ContentEntity contentEntity) {
-        //设置分页 分类等其他参数
+        //设置分类等其他参数
         setContentEntity(contentEntity);
+        //开始分页
+        PageUtils.startPage(10);
 
         List<ContentVo> contentVos = contentMapper.selectContentList(contentEntity);
         //获取文件url列表
         setFileListByContentVos(contentVos);
 
-        return new PageResult<ContentVo>(contentVos, contentVos.size());
+        return PageUtils.getPageResult(contentVos);
     }
 
     @Override
@@ -69,14 +72,11 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
 
 
     /**
-     * 设置分页 分类 等其他参数
+     * 设置分类 等其他参数
      *
      * @param contentEntity
      */
     private void setContentEntity(ContentEntity contentEntity) {
-        //设置分页
-        int firstIndex = (contentEntity.getPageNum() - 1) * contentEntity.getPageSize();
-        contentEntity.setPageNum(firstIndex);
 
         CategoryEntity category = categoryService.selectCategoryById(contentEntity.getCategoryId());
         //查询当前分类及其子类

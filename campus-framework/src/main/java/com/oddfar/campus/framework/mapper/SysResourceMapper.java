@@ -1,4 +1,5 @@
 package com.oddfar.campus.framework.mapper;
+
 import com.oddfar.campus.common.core.BaseMapperX;
 import com.oddfar.campus.common.core.LambdaQueryWrapperX;
 import com.oddfar.campus.common.domain.PageResult;
@@ -11,7 +12,7 @@ import java.util.Set;
 public interface SysResourceMapper extends BaseMapperX<SysResourceEntity> {
     default PageResult<SysResourceEntity> selectPage(SysResourceEntity resource) {
 
-        return selectPage(resource, new LambdaQueryWrapperX<SysResourceEntity>()
+        return selectPage(new LambdaQueryWrapperX<SysResourceEntity>()
                 .betweenIfPresent(SysResourceEntity::getCreateTime, resource.getParams()));
     }
 
@@ -48,6 +49,7 @@ public interface SysResourceMapper extends BaseMapperX<SysResourceEntity> {
 
     /**
      * 查询资源列表
+     *
      * @param resource
      * @return
      */

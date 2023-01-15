@@ -14,7 +14,7 @@ public interface TagMapper extends BaseMapperX<TagEntity> {
 
     default PageResult<TagEntity> selectPage(TagEntity tag) {
 
-        return selectPage(tag, new LambdaQueryWrapperX<TagEntity>()
+        return selectPage(new LambdaQueryWrapperX<TagEntity>()
                 .likeIfPresent(TagEntity::getTagName, tag.getTagName())
                 .eqIfPresent(TagEntity::getStatus, tag.getStatus())
         );

@@ -1,28 +1,22 @@
 package com.oddfar.campus.common.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@ApiModel("分页结果")
 @Data
 public final class PageResult<T> implements Serializable {
 
-    @ApiModelProperty(value = "数据", required = true)
     private List<T> rows;
 
-    @ApiModelProperty(value = "总量", required = true)
-
-    private int total;
+    private long total;
 
     public PageResult() {
     }
 
-    public PageResult(List<T> rows, int total) {
+    public PageResult(List<T> rows, long total) {
         this.rows = rows;
         this.total = total;
     }

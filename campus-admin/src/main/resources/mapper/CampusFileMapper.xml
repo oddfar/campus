@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oddfar.campus.business.mapper.CampusFileMapper">
+
+    <resultMap id="BaseResultMap" type="com.oddfar.campus.business.domain.entity.CampusFileEntity">
+        <id property="fileId" column="file_id" jdbcType="BIGINT"/>
+        <result property="contentId" column="content_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        file_id
+        ,content_id,content_id as content,user_id,
+        url
+    </sql>
+
+    <resultMap id="CampusFileVoMap" type="com.oddfar.campus.business.domain.vo.CampusFileVo">
+        <result property="contentId" column="content_id" jdbcType="BIGINT"/>
+        <collection property="fileUrls"  javaType="java.util.List" ofType="string" >
+            <constructor>
+                <arg column="url"/>
+            </constructor>
+        </collection>
+    </resultMap>
+
+    <select id="getContentFile" resultMap="CampusFileVoMap">
+        SELECT content_id,url
+        FROM campus_file
+        where content_id=#{contentId}
+    </select>
+
+</mapper>

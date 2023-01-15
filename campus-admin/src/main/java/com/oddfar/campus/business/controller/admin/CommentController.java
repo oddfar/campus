@@ -25,7 +25,7 @@ public class CommentController {
      * 查询评论列表
      */
     @PreAuthorize("@ss.resourceAuth()")
-    @GetMapping("/list")
+    @GetMapping(value = "/list")
     public R list(CommentEntity comment) {
         PageResult<CommentEntity> page = commentService.page(comment);
 

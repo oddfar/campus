@@ -12,7 +12,7 @@ public interface SysUserMapper extends BaseMapperX<SysUserEntity> {
 
     default PageResult<SysUserEntity> selectPage(SysUserEntity user) {
 
-        return selectPage(user, new LambdaQueryWrapperX<SysUserEntity>()
+        return selectPage(new LambdaQueryWrapperX<SysUserEntity>()
                 .likeIfPresent(SysUserEntity::getUserName, user.getUserName())
                 .likeIfPresent(SysUserEntity::getPhonenumber, user.getPhonenumber())
                 .eqIfPresent(SysUserEntity::getStatus, user.getStatus())
@@ -58,10 +58,10 @@ public interface SysUserMapper extends BaseMapperX<SysUserEntity> {
      * 修改用户头像
      *
      * @param userName 用户名
-     * @param avatar 头像地址
+     * @param avatar   头像地址
      * @return 结果
      */
-     int updateUserAvatar(@Param("userName") String userName, @Param("avatar") String avatar);
+    int updateUserAvatar(@Param("userName") String userName, @Param("avatar") String avatar);
 
     /**
      * 校验email是否唯一
@@ -80,7 +80,7 @@ public interface SysUserMapper extends BaseMapperX<SysUserEntity> {
      * @param phonenumber 手机号码
      * @return 结果
      */
-    default SysUserEntity checkPhoneUnique(String phonenumber){
+    default SysUserEntity checkPhoneUnique(String phonenumber) {
         return selectOne(new LambdaQueryWrapperX<SysUserEntity>().eq(SysUserEntity::getPhonenumber, phonenumber));
     }
 

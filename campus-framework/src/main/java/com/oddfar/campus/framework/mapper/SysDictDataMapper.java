@@ -12,7 +12,7 @@ import java.util.List;
 public interface SysDictDataMapper extends BaseMapperX<SysDictDataEntity> {
     default PageResult<SysDictDataEntity> selectPage(SysDictDataEntity dictData) {
 
-        return selectPage(dictData, new LambdaQueryWrapperX<SysDictDataEntity>()
+        return selectPage( new LambdaQueryWrapperX<SysDictDataEntity>()
                 .likeIfPresent(SysDictDataEntity::getDictType, dictData.getDictType())
                 .likeIfPresent(SysDictDataEntity::getDictLabel, dictData.getDictLabel())
                 .eqIfPresent(SysDictDataEntity::getStatus, "0")

@@ -34,11 +34,12 @@
         FROM campus_comment co
                  LEFT JOIN sys_user u on co.user_id=u.user_id
         WHERE co.content_id=#{contentId} and co.parent_id=0 and co.del_flag = '0'
-        order by co.create_time DESC
-        limit #{pageNum},#{pageSize}
-    </select>
+        order by co.comment_id DESC
 
-    <select id="getOneLevelChild"
+    </select>
+<!--    limit #{pageNum},#{pageSize}-->
+
+    <select id="getOneLevelChildHaveAuthor"
             resultType="com.oddfar.campus.business.domain.vo.CommentVo">
         SELECT co.comment_id, co.parent_id,co.user_id,co.to_user_id,co.one_level_id,co.content_id,co.co_content,co.ip,co.address,co.del_flag,co.create_time,
                u.nick_name as user_nick_name,u.avatar
@@ -53,6 +54,17 @@
                 AND user_id=#{userId} AND del_flag = '0'
             GROUP BY parent_id)
 
+    </select>
+    <select id="getOneLevelChild" parameterType="com.oddfar.campus.business.domain.entity.CommentEntity"
+            resultType="com.oddfar.campus.business.domain.vo.CommentVo">
+        SELECT co.comment_id,co.parent_id,co.user_id,co.to_user_id,co.one_level_id,co.content_id,co.co_content,co.ip,co.address,co.del_flag,co.create_time,
+               u.nick_name as user_nick_name,u.avatar,
+               uu.nick_name as to_user_nick_name
+        FROM campus_comment co
+                 LEFT JOIN sys_user u on co.user_id=u.user_id
+                 LEFT JOIN sys_user uu on co.to_user_id=uu.user_id
+        WHERE co.one_level_id=#{commentId} and co.parent_id!=0 and co.del_flag = '0'
+        order by co.create_time DESC
     </select>
 
 

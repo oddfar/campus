@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.oddfar.campus.common.domain.BaseEntity;
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,7 +22,6 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(description = "菜单权限表 sys_menu")
 @TableName("sys_menu")
 public class SysMenuEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;

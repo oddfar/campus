@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.oddfar.campus.common.constant.UserConstants;
 import com.oddfar.campus.common.domain.BaseEntity;
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,7 +17,6 @@ import javax.validation.constraints.Size;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(description = "sys_dict_data字典数据表")
 @TableName("sys_dict_data")
 public class SysDictDataEntity extends BaseEntity {
 

@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface SysDictTypeMapper extends BaseMapperX<SysDictTypeEntity> {
     default PageResult<SysDictTypeEntity> selectPage(SysDictTypeEntity dictType) {
-        return selectPage(dictType, new LambdaQueryWrapperX<SysDictTypeEntity>()
+        return selectPage(new LambdaQueryWrapperX<SysDictTypeEntity>()
                 .likeIfPresent(SysDictTypeEntity::getDictName, dictType.getDictName())
                 .likeIfPresent(SysDictTypeEntity::getDictType, dictType.getDictType())
                 .eqIfPresent(SysDictTypeEntity::getStatus, dictType.getStatus())

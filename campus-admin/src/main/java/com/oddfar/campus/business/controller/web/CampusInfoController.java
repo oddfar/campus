@@ -57,9 +57,11 @@ public class CampusInfoController {
 
     /**
      * 查询分类子列表
+     * @param categoryId 分类id
+     * @return
      */
     @Anonymous
-    @GetMapping(value = "/categoryChildren/{categoryId}", name = "查询分类列表")
+    @GetMapping(value = "/categoryChildren/{categoryId}", name = "查询分类子列表")
     public R categoryChildren(@PathVariable Long categoryId) {
         CategoryEntity categoryEntity = categoryService.selectCategoryById(categoryId);
         return R.ok(categoryEntity);
@@ -67,6 +69,8 @@ public class CampusInfoController {
 
     /**
      * 查询信息墙内容列表
+     * @param contentQueryVo 查询参数
+     * @return
      */
     @Anonymous
     @PostMapping(value = "/contentList", name = "查询信息墙内容列表")
@@ -74,8 +78,6 @@ public class CampusInfoController {
         ContentEntity contentEntity = new ContentEntity();
         BeanUtil.copyProperties(contentQueryVo, contentEntity);
 
-        contentEntity.setPageNum(contentQueryVo.getPageNum());
-        contentEntity.setPageSize(10);
         contentEntity.setStatus(1);
 
         //最新墙 热门墙等等。。。
@@ -109,7 +111,7 @@ public class CampusInfoController {
      * 根据contentId查询信息墙详细内容
      */
     @Anonymous
-    @GetMapping(value = "/getContent", name = "查询信息墙内容")
+    @GetMapping(value = "/getContent", name = "查询信息墙详细内容")
     public R getContentById(Long id) {
         ContentEntity contentEntity = new ContentEntity();
         contentEntity.setContentId(id);
@@ -135,30 +137,31 @@ public class CampusInfoController {
      * 查询一级评论
      */
     @Anonymous
-    @GetMapping(value = "/getOneLevelComment", name = "查询信息墙内容")
+    @GetMapping(value = "/getOneLevelComment", name = "查询一级评论")
     public R getOneLevelComment(CommentEntity commentEntity) {
-        commentEntity.setPageSize(5);
-        List<CommentVo> commentVos = commentService.selectOneLevel(commentEntity);
 
-        PageResult<CommentVo> pageResult = new PageResult<>(commentVos, commentVos.size());
+        PageResult<CommentVo> commentVos = commentService.selectOneLevel(commentEntity);
 
+        return R.ok().put(commentVos);
 
-        return R.ok().put(pageResult);
+    }
+
+    /**
+     * 查询一级评论
+     */
+    @Anonymous
+    @GetMapping(value = "/getCommentChildren", name = "查询一级评论")
+    public R getCommentChildren(CommentEntity commentEntity) {
+        PageResult<CommentVo> commentVos = commentService.selectOneLevelChild(commentEntity);
+
+        return R.ok().put(commentVos);
 
     }
 
     @Anonymous
     @GetMapping("test")
     public R test() {
-//        List<Long> list = new ArrayList<>();
-//        list.add(1L);
-//        list.add(2L);
-//        List<CampusFileVo> contentFile = fileService.getContentFile(list);
-//        fileService.getContentFile(1L);
-        CommentEntity commentEntity = new CommentEntity();
-        commentEntity.setContentId(1L);
-        List<CommentVo> commentVos = commentService.selectOneLevel(commentEntity);
-        commentVos.forEach(System.out::println);
+
         return R.ok();
     }
 

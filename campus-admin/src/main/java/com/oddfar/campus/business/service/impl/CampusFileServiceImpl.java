@@ -24,8 +24,8 @@ public class CampusFileServiceImpl extends ServiceImpl<CampusFileMapper, CampusF
 
     @Override
     public List<CampusFileVo> getContentFile(List<Long> contentId) {
-        List<CampusFileEntity> campusFileEntities = campusFileMapper.selectList(new LambdaQueryWrapperX<CampusFileEntity>()
-                .in(CampusFileEntity::getContentId, contentId));
+        List<CampusFileEntity> campusFileEntities = campusFileMapper.selectList(
+                new LambdaQueryWrapperX<CampusFileEntity>().in(CampusFileEntity::getContentId, contentId));
 
         //根据id,把url相放入前面的集合
         List<CampusFileEntity> collect = campusFileEntities.stream().collect(
