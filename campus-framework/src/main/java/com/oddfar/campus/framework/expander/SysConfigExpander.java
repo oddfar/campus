@@ -9,7 +9,6 @@ import javax.annotation.PostConstruct;
 @Component
 public class SysConfigExpander {
 
-
     private static SysConfigService configService;
 
     @Autowired
@@ -45,7 +44,6 @@ public class SysConfigExpander {
      */
     public static String getFileProfile() {
 
-
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("win")) {
             return configService.selectConfigByKey("sys.local.profile.win", String.class, "D:\\uploadPath");
@@ -59,17 +57,4 @@ public class SysConfigExpander {
         return null;
     }
 
-    /**
-     * 获取头像上传路径
-     */
-    public static String getAvatarPath() {
-        return getFileProfile() + "/avatar";
-    }
-
-    /**
-     * 获取校园墙文件上传路径
-     */
-    public static String getCampusFilePath() {
-        return getFileProfile() + "/CampusFile";
-    }
 }

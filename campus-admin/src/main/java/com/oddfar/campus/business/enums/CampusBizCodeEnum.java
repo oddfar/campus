@@ -11,25 +11,46 @@ package com.oddfar.campus.business.enums;
  *      002：短信验证码频率太高
  *  11: 用户
  *  12: 校园墙
- *
+ *  13: 评论
  *
  */
 public enum CampusBizCodeEnum {
 
-
+    /**
+     * 系统通用
+     */
     UNKNOWN_EXCEPTION(10000, "系统未知错误"),
     VALID_EXCEPTION(10001, "参数校验异常"),
     SMS_CODE_EXCEPTION(10002, "验证码获取频率太高，请稍后再试"),
     TOO_MANY_REQUEST(10003, "请求流量过大，请稍后再试"),
+    TOO_MANY_File(10004, "上传文件数量超限，请明日上传"),
 
     NO_THREE_CATEGORY(10010, "禁止添加三级分类"),
     CATEGORY_NAME_REPEAT(10011, "分类名称重复"),
     CATEGORY_SLUG_REPEAT(10012, "分类缩写名重复"),
+    CATEGORY_NOT_EXIST(10013, "分类不存在"),
 
     TAG_NAME_REPEAT(10021, "标签缩写名重复"),
 
-    CONTENT_IS_NULL(10031,"信息墙内容不存在"),
-    CONTENT_OPERATION_PROHIBITED(10032,"信息墙禁止操作"),
+    /**
+     * 信息墙
+     */
+    CONTENT_IS_NULL(12001,"信息墙内容不存在"),
+    CONTENT_OPERATION_PROHIBITED(12002,"信息墙禁止操作"),
+    CONTENT_NOT_NULL(12003,"信息墙内容不能为空"),
+    CONTENT_FILE_COUNT_TOO_MANY(12004,"信息墙文件数量过多"),
+    CONTENT_FILE_COUNT_EXCEPTION(12005,"信息墙文件数量异常"),
+    CONTENT_FILE_EXCEPTION(12006,"信息墙文件异常"),
+
+    /**
+     * 用户
+     */
+    NOT_LOGGED_IN(11001,"请登录后操作"),
+
+    /**
+     * 评论
+     */
+    COMMENT_IS_NULL(13001,"评论不存在"),
 
 
 

@@ -44,7 +44,6 @@ public class MyDBFieldHandler implements MetaObjectHandler {
             if (Objects.isNull(baseEntity.getDelFlag())) {
                 baseEntity.setDelFlag(0);
             }
-            System.out.println("getDelFlag:" + baseEntity.getDelFlag());
         }
     }
 

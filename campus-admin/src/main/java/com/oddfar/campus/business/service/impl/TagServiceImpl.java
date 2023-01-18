@@ -1,6 +1,7 @@
 package com.oddfar.campus.business.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.oddfar.campus.business.domain.entity.ContentTagEntity;
 import com.oddfar.campus.business.domain.entity.TagEntity;
 import com.oddfar.campus.business.enums.CampusBizCodeEnum;
 import com.oddfar.campus.business.mapper.TagMapper;
@@ -11,6 +12,8 @@ import com.oddfar.campus.common.exception.ServiceException;
 import com.oddfar.campus.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TagServiceImpl extends ServiceImpl<TagMapper, TagEntity>
@@ -34,6 +37,12 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, TagEntity>
     public int updateTag(TagEntity tag) {
         checkAddOrUpdate(tag);
         return tagMapper.updateById(tag);
+    }
+
+    @Override
+    public List<ContentTagEntity> getTagListByContentIds(List<Long> contentIds) {
+        List<ContentTagEntity> tagEntities = tagMapper.selectTagListByContentIds(contentIds);
+        return tagEntities;
     }
 
     @Override

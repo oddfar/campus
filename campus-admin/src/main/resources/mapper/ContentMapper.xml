@@ -14,6 +14,7 @@
         <result property="fileCount" column="file_count" jdbcType="TINYINT"/>
         <result property="loveCount" column="love_count" jdbcType="BIGINT"/>
         <result property="isAnonymous" column="is_anonymous" jdbcType="TINYINT"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="delFlag" column="del_flag" jdbcType="BIT"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="createUser" column="create_user" jdbcType="BIGINT"/>
@@ -32,6 +33,7 @@
         <result property="fileCount" column="file_count" jdbcType="TINYINT"/>
         <result property="loveCount" column="love_count" jdbcType="BIGINT"/>
         <result property="isAnonymous" column="is_anonymous" jdbcType="TINYINT"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <association property="params" javaType="java.util.Map" >
             <result property="userId" column="user_id"/>
@@ -60,17 +62,9 @@
         <result property="tagName" column="tag_name"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        content_id
-        ,user_id,category_id,
-        content,status,type,
-        file_count,is_anonymous,del_flag,
-        create_time,create_user,update_time,
-        update_user
-    </sql>
 
     <sql id="selectContent">
-        select c.content_id,
+        select DISTINCT c.content_id,
                c.user_id,
                c.category_id,
                c.content,
@@ -79,20 +73,19 @@
                c.file_count,
                c.love_count,
                c.is_anonymous,
+               c.remark,
                c.del_flag,
                c.create_time,
                c.create_user,
                cc.category_name,
                u.user_name,
                u.nick_name,
-               u.avatar,
-               ct.tag_id,
-               t.tag_name
+               u.avatar
+
         from campus_content c
                  left join campus_category cc on cc.category_id = c.category_id
                  left join sys_user u on u.user_id = c.user_id
-                 left join campus_content_tag ct on ct.content_id = c.content_id
-                 left join campus_tag t on t.tag_id = ct.tag_id and t.status = '0' and t.del_flag = '0'
+
     </sql>
 
     <sql id="selectContentWhere">
@@ -108,6 +101,9 @@
             <foreach collection="params.categoryIds" item="categoryId" open="(" separator="," close=")">
                 #{categoryId}
             </foreach>
+        </if>
+        <if test="userId != null and userId != ''">
+            AND c.user_id = #{userId}
         </if>
         <if test="content != null and content != ''">
             AND c.content like concat('%', #{content}, '%')
@@ -130,11 +126,23 @@
 
     </sql>
 
+    <sql id="selectContentOrderBy">
+        <if test="params.orderBy != null and params.orderBy == 'hotContent'">
+            order by c.love_count DESC
+        </if>
+        <if test="params.orderBy != null and params.orderBy == 'newest'">
+            order by c.create_time DESC
+        </if>
+        <if test="params.orderBy == null">
+            order by c.status asc,c.create_time DESC
+        </if>
+    </sql>
+
     <select id="selectContentList" parameterType="com.oddfar.campus.business.domain.entity.ContentEntity"
             resultMap="ContentVoResult">
         <include refid="selectContent"></include>
         <include refid="selectContentWhere"></include>
-        order by c.status asc,c.create_time DESC
+        <include refid="selectContentOrderBy"></include>
     </select>
 
     <select id="selectContentByContent" parameterType="com.oddfar.campus.business.domain.entity.ContentEntity"
@@ -145,7 +153,20 @@
             AND c.content_id = #{contentId}
         </if>
 
+    </select>
+    <select id="selectLoveContentList" resultType="java.lang.Long">
+        SELECT DISTINCT l.content_id
+        FROM campus_content_love l
+                 INNER JOIN campus_content c ON l.content_id = c.content_id AND c.user_id = #{userId} AND c.STATUS = 1 AND c.del_flag = '0'
+        WHERE  l.user_id= #{userId}
+    </select>
 
+    <select id="selectContentByIds" resultMap="ContentVoResult">
+        <include refid="selectContent"></include>
+        WHERE c.content_id in   <foreach item="contentId"  collection="contentIdList" open="(" separator="," close=")">
+                                 #{contentId}
+                                </foreach>
+        order by c.create_time DESC
     </select>
 
 </mapper>

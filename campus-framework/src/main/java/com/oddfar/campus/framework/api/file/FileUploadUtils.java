@@ -7,7 +7,7 @@ import com.oddfar.campus.common.exception.file.InvalidExtensionException;
 import com.oddfar.campus.common.utils.DateUtils;
 import com.oddfar.campus.common.utils.StringUtils;
 import com.oddfar.campus.common.utils.uuid.Seq;
-import com.oddfar.campus.framework.expander.SysConfigExpander;
+import com.oddfar.campus.framework.api.sysconfig.ConfigExpander;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +39,7 @@ public class FileUploadUtils {
     /**
      * 默认上传的地址
      */
-    private static String defaultBaseDir = SysConfigExpander.getFileProfile();
+    private static String defaultBaseDir = ConfigExpander.getFileProfile();
 
     public static void setDefaultBaseDir(String defaultBaseDir) {
         FileUploadUtils.defaultBaseDir = defaultBaseDir;
@@ -130,7 +130,7 @@ public class FileUploadUtils {
     }
 
     public static final String getPathFileName(String uploadDir, String fileName) throws IOException {
-        int dirLastIndex = SysConfigExpander.getFileProfile().length() + 1;
+        int dirLastIndex = ConfigExpander.getFileProfile().length() + 1;
         String currentDir = StringUtils.substring(uploadDir, dirLastIndex);
         return Constants.RESOURCE_PREFIX + "/" + currentDir + "/" + fileName;
     }

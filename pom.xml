@@ -15,10 +15,8 @@
 
     <modules>
         <module>campus-common</module>
-        <module>campus-component</module>
         <module>campus-framework</module>
         <module>campus-admin</module>
-        <module>campus-web</module>
     </modules>
 
     <properties>

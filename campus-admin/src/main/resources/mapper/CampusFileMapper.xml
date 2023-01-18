@@ -16,10 +16,19 @@
         ,content_id,content_id as content,user_id,
         url
     </sql>
+    <update id="updateContentFile">
+        UPDATE campus_file
+        SET content_id=#{contentId}
+        WHERE file_id in
+        <foreach item="fileId" collection="fileIds" open="(" separator="," close=")">
+            #{fileId}
+        </foreach>
+        AND content_id IS NULL
+    </update>
 
     <resultMap id="CampusFileVoMap" type="com.oddfar.campus.business.domain.vo.CampusFileVo">
         <result property="contentId" column="content_id" jdbcType="BIGINT"/>
-        <collection property="fileUrls"  javaType="java.util.List" ofType="string" >
+        <collection property="fileUrls" javaType="java.util.List" ofType="string">
             <constructor>
                 <arg column="url"/>
             </constructor>
@@ -27,9 +36,9 @@
     </resultMap>
 
     <select id="getContentFile" resultMap="CampusFileVoMap">
-        SELECT content_id,url
+        SELECT content_id, url
         FROM campus_file
-        where content_id=#{contentId}
+        where content_id = #{contentId}
     </select>
 
 </mapper>

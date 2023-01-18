@@ -60,7 +60,7 @@ public class ContentEntity extends BaseEntity {
     /**
      * 文件数量
      */
-    private Long fileCount;
+    private Integer fileCount;
 
     /**
      * 点赞数量
@@ -70,6 +70,11 @@ public class ContentEntity extends BaseEntity {
      * 0不匿名，1匿名
      */
     private Integer isAnonymous;
+
+    /**
+     * 备注
+     */
+    private String remark;
 
     /**
      * 文件URL列表

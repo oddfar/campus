@@ -1,7 +1,7 @@
 package com.oddfar.campus.framework.api.file;
 
 
-import com.oddfar.campus.framework.expander.SysConfigExpander;
+import com.oddfar.campus.framework.api.sysconfig.ConfigExpander;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * 文件的自动配置
  */
 @Configuration
-public class FileAutoConfiguration {
+public class ZyFileAutoConfiguration {
 
     /**
      * 本地文件操作
@@ -18,7 +18,7 @@ public class FileAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(FileOperatorApi.class)
     public FileOperatorApi fileOperatorApi() {
-        return new LocalFileOperator(SysConfigExpander.getFileProfile());
+        return new LocalFileOperator(ConfigExpander.getFileProfile());
     }
 
 }

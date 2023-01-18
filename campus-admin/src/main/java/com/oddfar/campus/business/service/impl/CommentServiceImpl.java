@@ -1,5 +1,6 @@
 package com.oddfar.campus.business.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.oddfar.campus.business.domain.entity.CommentEntity;
 import com.oddfar.campus.business.domain.entity.ContentEntity;
@@ -11,6 +12,10 @@ import com.oddfar.campus.business.service.CommentService;
 import com.oddfar.campus.common.core.page.PageUtils;
 import com.oddfar.campus.common.domain.PageResult;
 import com.oddfar.campus.common.exception.ServiceException;
+import com.oddfar.campus.common.utils.SecurityUtils;
+import com.oddfar.campus.common.utils.ServletUtils;
+import com.oddfar.campus.common.utils.ip.AddressUtils;
+import com.oddfar.campus.common.utils.ip.IpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,17 +75,52 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentEntity
 
     @Override
     public int insertComment(CommentEntity comment) {
-        ContentEntity contentEntity = contentMapper.selectById(comment.getContentId());
-        if (contentEntity == null) {
-            throw new ServiceException(CampusBizCodeEnum.CONTENT_IS_NULL.getMsg(), CampusBizCodeEnum.CONTENT_IS_NULL.getCode());
-        }
+        Long userId = SecurityUtils.getUserId();
+        if (comment.getContentId() != null) {
+            //添加一级评论
+            ContentEntity contentEntity = contentMapper.selectById(comment.getContentId());
+            if (contentEntity == null) {
+                throw new ServiceException(CampusBizCodeEnum.CONTENT_IS_NULL.getMsg(), CampusBizCodeEnum.CONTENT_IS_NULL.getCode());
+            }
 
+        } else {
+            //给评论添加评论
+            CommentEntity commentEntity = commentMapper.selectById(comment.getCommentId());
+            if (commentEntity == null) {
+                throw new ServiceException(CampusBizCodeEnum.COMMENT_IS_NULL.getMsg(), CampusBizCodeEnum.COMMENT_IS_NULL.getCode());
+            }
+
+            comment.setParentId(commentEntity.getCommentId());
+            //设置一级评论id
+            if(commentEntity.getParentId()==0){
+                comment.setOneLevelId(commentEntity.getCommentId());
+                comment.setToUserId(null);
+            }else {
+                comment.setOneLevelId(commentEntity.getOneLevelId());
+                comment.setToUserId(commentEntity.getUserId());
+            }
+
+            comment.setContentId(commentEntity.getContentId());
+        }
+        comment.setCommentId(IdWorker.getId());
+        comment.setUserId(userId);
+        comment.setIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
+        comment.setAddress(AddressUtils.getRealAddressByIP(comment.getIp()));
         return commentMapper.insert(comment);
     }
 
     @Override
     public int updateComment(CommentEntity comment) {
         return commentMapper.updateById(comment);
+    }
+
+    /**
+     * 添加一级评论
+     *
+     * @param comment
+     */
+    private void insertOneLevelComment(CommentEntity comment) {
+
     }
 }
 

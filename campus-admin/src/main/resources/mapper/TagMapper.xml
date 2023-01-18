@@ -20,4 +20,14 @@
         del_flag,create_time,create_user,
         update_time,update_user
     </sql>
+
+    <select id="selectTagListByContentIds" resultType="com.oddfar.campus.business.domain.entity.ContentTagEntity">
+        select  ct.content_id ,t.tag_id ,t.tag_name
+        FROM campus_content_tag  ct
+                 INNER JOIN campus_tag t ON ct.tag_id = t.tag_id AND t.status=0 AND t.del_flag = '0'
+        WHERE ct.content_id IN
+        <foreach item="contentId"  collection="contentIds" open="(" separator="," close=")">
+            #{contentId}
+        </foreach>
+    </select>
 </mapper>

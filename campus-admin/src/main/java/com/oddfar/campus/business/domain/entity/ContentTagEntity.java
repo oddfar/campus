@@ -22,5 +22,10 @@ public class ContentTagEntity   {
      */
     private Long tagId;
 
+    /**
+     * 标签名
+     */
+    private String tagName;
+
 
 }

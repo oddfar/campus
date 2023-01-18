@@ -90,6 +90,7 @@ mybatis-plus:
 # PageHelper分页插件
 pagehelper:
   helperDialect: mysql
+  support-methods-arguments: false
 
 # Swagger配置
 swagger:

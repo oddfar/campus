@@ -9,7 +9,7 @@ import com.oddfar.campus.common.utils.SecurityUtils;
 import com.oddfar.campus.common.utils.StringUtils;
 import com.oddfar.campus.framework.api.file.FileUploadUtils;
 import com.oddfar.campus.framework.api.file.MimeTypeUtils;
-import com.oddfar.campus.framework.expander.SysConfigExpander;
+import com.oddfar.campus.framework.api.sysconfig.ConfigExpander;
 import com.oddfar.campus.framework.service.SysUserService;
 import com.oddfar.campus.framework.web.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +104,7 @@ public class SysProfileController {
     public R avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {
         if (!file.isEmpty()) {
             LoginUser loginUser = getLoginUser();
-            String avatar = FileUploadUtils.upload(SysConfigExpander.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
+            String avatar = FileUploadUtils.upload(ConfigExpander.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
             if (userService.updateUserAvatar(loginUser.getUsername(), avatar)) {
                 R ajax = R.ok();
                 ajax.put("imgUrl", avatar);

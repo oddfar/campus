@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.oddfar.campus.common.constant.Constants;
-import com.oddfar.campus.framework.expander.SysConfigExpander;
+import com.oddfar.campus.framework.api.sysconfig.ConfigExpander;
 import com.oddfar.campus.framework.interceptor.RepeatSubmitInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,7 +43,7 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
 
         /** 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
-                .addResourceLocations("file:" + SysConfigExpander.getFileProfile() + "/");
+                .addResourceLocations("file:" + ConfigExpander.getFileProfile() + "/");
 
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")

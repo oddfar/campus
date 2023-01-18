@@ -49,7 +49,7 @@ public class CategoryController {
      * 获取分类详细信息
      */
     @PreAuthorize("@ss.resourceAuth()")
-    @GetMapping(value = "/{categoryId}")
+    @GetMapping(value = "/{categoryId}",name = "获取分类详细信息")
     public R getInfo(@PathVariable("categoryId") Long categoryId) {
         return R.ok(categoryService.getById(categoryId));
     }
@@ -58,7 +58,7 @@ public class CategoryController {
      * 新增分类
      */
     @PreAuthorize("@ss.resourceAuth()")
-    @PostMapping
+    @PostMapping(name = "新增分类")
     public R add(@Validated @RequestBody CategoryEntity category) {
 
         return R.ok(categoryService.insertCategory(category));
@@ -68,7 +68,7 @@ public class CategoryController {
      * 修改分类
      */
     @PreAuthorize("@ss.resourceAuth()")
-    @PutMapping
+    @PutMapping(name = "修改分类")
     public R edit(@Validated @RequestBody CategoryEntity category) {
 
         return R.ok(categoryService.updateCategory(category));
@@ -78,7 +78,7 @@ public class CategoryController {
      * 删除分类
      */
     @PreAuthorize("@ss.resourceAuth()")
-    @DeleteMapping("/{categoryId}")
+    @DeleteMapping(value = "/{categoryId}",name = "删除分类")
     public R remove(@PathVariable("categoryId") Long categoryId) {
         categoryService.deleteCategoryById(categoryId);
         return R.ok();

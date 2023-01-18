@@ -7,7 +7,7 @@ import com.oddfar.campus.common.constant.Constants;
 import com.oddfar.campus.common.core.RedisCache;
 import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.utils.uuid.IdUtils;
-import com.oddfar.campus.framework.expander.SysConfigExpander;
+import com.oddfar.campus.framework.api.sysconfig.ConfigExpander;
 import com.oddfar.campus.framework.service.SysConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
@@ -58,7 +58,7 @@ public class CaptchaController {
         String capStr = null, code = null;
         BufferedImage image = null;
 
-        String captchaType = SysConfigExpander.getLoginCaptchaType();
+        String captchaType = ConfigExpander.getLoginCaptchaType();
         if ("math".equals(captchaType)) {
             String capText = captchaProducerMath.createText();
             capStr = capText.substring(0, capText.lastIndexOf("@"));

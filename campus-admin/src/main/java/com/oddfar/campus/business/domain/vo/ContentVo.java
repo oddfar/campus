@@ -1,7 +1,7 @@
 package com.oddfar.campus.business.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.oddfar.campus.business.domain.entity.TagEntity;
+import com.oddfar.campus.business.domain.entity.ContentTagEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -63,13 +63,18 @@ public class ContentVo {
      */
     private List<String> fileUrl;
 
+    /**
+     * 备注
+     */
+    private String remark;
+
 //    private SysUserEntity userEntity;
 
 //    private CategoryEntity category;
 
-    private List<TagEntity> tags;
+    private List<ContentTagEntity> tags;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     private Map<String, Object> params;
