@@ -26,14 +26,21 @@ public interface ContentMapper extends BaseMapperX<ContentEntity> {
      */
     ContentVo selectContentByContent(ContentEntity contentEntity);
 
-    List<ContentVo>  selectContentByIds(@Param("contentIdList") List<Long> contentIdList);
+    List<ContentVo> selectContentByIds(@Param("contentIdList") List<Long> contentIdList);
 
     /**
      * 查询某用户的点赞信息墙ID列表
+     *
      * @param userId
      * @return
      */
     List<Long> selectLoveContentList(@Param("userId") Long userId);
+
+    /**
+     * 查询热门信息墙内容列表（热度根据点赞高低判断）
+     * @return
+     */
+    List<ContentEntity> getSimpleHotContent();
 }
 
 

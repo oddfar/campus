@@ -11,10 +11,10 @@ import com.oddfar.campus.common.utils.StringUtils;
 import com.oddfar.campus.framework.service.SysRoleService;
 import com.oddfar.campus.framework.service.SysUserService;
 import com.oddfar.campus.framework.web.service.SysPermissionService;
-import io.swagger.v3.oas.annotations.Operation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,8 +36,10 @@ public class SysUserController {
     @Autowired
     private SysPermissionService permissionService;
 
+    /**
+     * 分页
+     */
     @GetMapping("list")
-    @Operation(summary = "分页")
     @PreAuthorize("@ss.hasPermi('system:user:list')")
     public R page(SysUserEntity sysUserEntity) {
         PageResult<SysUserEntity> page = userService.page(sysUserEntity);
@@ -45,8 +47,10 @@ public class SysUserController {
         return R.ok().put(page);
     }
 
+    /**
+     * 信息
+     */
     @GetMapping({"{userId}", "/"})
-    @Operation(summary = "信息")
     @PreAuthorize("@ss.hasPermi('system:user:query')")
     public R getInfo(@PathVariable(value = "userId", required = false) Long userId) {
         R res = R.ok();
@@ -61,26 +65,42 @@ public class SysUserController {
         return res;
     }
 
+    /**
+     * 新增用户
+     */
     @PostMapping
-    @Operation(summary = "新增用户")
     @PreAuthorize("@ss.hasPermi('system:user:add')")
-    public R save(@RequestBody SysUserEntity sysUserEntity) {
+    public R add(@Validated @RequestBody SysUserEntity sysUserEntity) {
         userService.insertUser(sysUserEntity);
 
         return R.ok();
     }
 
+    /**
+     * 修改
+     */
     @PutMapping
-    @Operation(summary = "修改")
     @PreAuthorize("@ss.hasPermi('system:user:edit')")
-    public R update(@RequestBody SysUserEntity sysUserEntity) {
-        userService.updateUser(sysUserEntity);
+    public R update(@Validated @RequestBody SysUserEntity user) {
+        userService.checkUserAllowed(user);
+        if (!(userService.checkUserNameUnique(user))) {
+            return R.error("修改用户'" + user.getUserName() + "'失败，登录账号已存在");
+        } else if (StringUtils.isNotEmpty(user.getPhonenumber())
+                && !(userService.checkPhoneUnique(user))) {
+            return R.error("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
+        } else if (StringUtils.isNotEmpty(user.getEmail())
+                && !(userService.checkEmailUnique(user))) {
+            return R.error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
+        }
 
-        return R.ok();
+
+        return R.ok(userService.updateUser(user));
     }
 
+    /**
+     * 删除
+     */
     @DeleteMapping("/{userIds}")
-    @Operation(summary = "删除")
     @PreAuthorize("@ss.hasPermi('system:user:remove')")
     public R remove(@PathVariable Long[] userIds) {
         if (ArrayUtils.contains(userIds, SecurityUtils.getUserId())) {

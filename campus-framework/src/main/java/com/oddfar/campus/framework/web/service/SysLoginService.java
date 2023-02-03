@@ -74,7 +74,7 @@ public class SysLoginService {
             } else {
                 //异步执行->登录信息
 //                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, e.getMessage()));
-//                e.printStackTrace();
+                e.printStackTrace();
                 throw new ServiceException(e.getMessage());
             }
         } finally {

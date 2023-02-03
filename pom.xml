@@ -33,6 +33,7 @@
         <kaptcha.version>2.3.2</kaptcha.version>
         <jwt.version>0.9.1</jwt.version>
         <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
+        <sunmail.version>1.6.2</sunmail.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -115,11 +116,19 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
+
             <!--mapstruct-->
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- 邮件服务-->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${sunmail.version}</version>
             </dependency>
             <!--            &lt;!&ndash; Mysql驱动包 &ndash;&gt;-->
             <!--            <dependency>-->

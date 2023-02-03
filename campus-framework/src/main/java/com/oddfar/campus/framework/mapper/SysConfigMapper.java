@@ -39,7 +39,7 @@ public interface SysConfigMapper extends BaseMapperX<SysConfigEntity> {
     default SysConfigEntity checkConfigKeyUnique(SysConfigEntity config) {
         return selectOne(new LambdaQueryWrapperX<SysConfigEntity>()
                 .eq(SysConfigEntity::getConfigKey, config.getConfigKey())
-                .ne(SysConfigEntity::getConfigId, config.getConfigId()));
+        );
     }
 
 }

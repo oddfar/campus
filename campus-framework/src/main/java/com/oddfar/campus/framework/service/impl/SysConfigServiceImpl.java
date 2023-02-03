@@ -149,8 +149,9 @@ public class SysConfigServiceImpl implements SysConfigService {
 
     @Override
     public boolean checkConfigKeyUnique(SysConfigEntity config) {
-        SysConfigEntity dictTypeEntity = configMapper.checkConfigKeyUnique(config);
-        if (StringUtils.isNotNull(dictTypeEntity)) {
+        Long configId = StringUtils.isNull(config.getConfigId()) ? -1L : config.getConfigId();
+        SysConfigEntity info = configMapper.checkConfigKeyUnique(config);
+        if (StringUtils.isNotNull(info) && info.getConfigId().longValue() != configId.longValue()) {
             return false;
         }
         return true;

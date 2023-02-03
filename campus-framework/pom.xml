@@ -53,6 +53,11 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!-- 邮件服务-->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+        </dependency>
 
 
     </dependencies>

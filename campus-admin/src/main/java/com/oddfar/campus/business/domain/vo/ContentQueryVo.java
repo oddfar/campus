@@ -14,13 +14,6 @@ import lombok.NoArgsConstructor;
 public class ContentQueryVo {
     private static final long serialVersionUID = 1L;
 
-    private static final Integer PAGE_NUM = 1;
-
-    /**
-     * 页码
-     */
-    private Integer pageNum = PAGE_NUM;
-
     /**
      * 内容id
      */

@@ -6,6 +6,8 @@ import com.oddfar.campus.business.domain.vo.ContentVo;
 import com.oddfar.campus.business.domain.vo.SendContentVo;
 import com.oddfar.campus.common.domain.PageResult;
 
+import java.util.List;
+
 /**
  * @author ningzhiyuan
  */
@@ -51,6 +53,7 @@ public interface ContentService extends IService<ContentEntity> {
 
     /**
      * 用户发表信息墙
+     *
      * @param sendContentVo
      * @return
      */
@@ -65,4 +68,10 @@ public interface ContentService extends IService<ContentEntity> {
     int updateContent(ContentEntity content);
 
 
+    /**
+     * 查询热门信息墙内容列表（热度根据点赞高低判断）
+     *
+     * @return
+     */
+    List<ContentEntity> getSimpleHotContent();
 }

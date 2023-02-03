@@ -42,6 +42,7 @@
                  left join sys_role r on r.role_id = ur.role_id
     </sql>
 
+
     <update id="resetUserPwd" parameterType="SysUserEntity">
         update sys_user set password = #{password} where user_name = #{userName}
     </update>

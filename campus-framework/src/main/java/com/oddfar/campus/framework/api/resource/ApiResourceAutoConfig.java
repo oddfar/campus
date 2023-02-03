@@ -13,6 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ApiResourceAutoConfig {
 
+    /**
+     * 资源搜集器
+     */
     @Bean
     @ConditionalOnMissingBean(ApiResourceScanner.class)
     public ApiResourceScanner apiResourceScanner(ResourceCollectorApi resourceCollectorApi) {
@@ -21,7 +24,7 @@ public class ApiResourceAutoConfig {
 
 
     /**
-     * 资源搜集器
+     * 资源搜集api
      */
     @Bean
     @ConditionalOnMissingBean(ResourceCollectorApi.class)

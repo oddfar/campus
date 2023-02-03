@@ -4,6 +4,7 @@ import com.oddfar.campus.business.domain.entity.ContentEntity;
 import com.oddfar.campus.business.domain.vo.ContentVo;
 import com.oddfar.campus.business.service.ContentService;
 import com.oddfar.campus.common.annotation.ApiResource;
+import com.oddfar.campus.common.core.page.PageUtils;
 import com.oddfar.campus.common.domain.PageResult;
 import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.enums.ResBizTypeEnum;
@@ -28,6 +29,8 @@ public class ContentController {
     @PreAuthorize("@ss.resourceAuth()")
     public R page(ContentEntity contentEntity) {
 
+        //开始分页
+        PageUtils.startPage();
 
         PageResult<ContentVo> page = contentService.page(contentEntity);
 

@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity>
         implements ContentService {
 
+    private static final  int WEB_PAGE_SIZE = 5;
     @Resource
     private ContentMapper contentMapper;
     @Resource
@@ -51,8 +52,6 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
     public PageResult<ContentVo> page(ContentEntity contentEntity) {
         //设置分类等其他参数
         setQueryContentEntity(contentEntity);
-        //开始分页
-        PageUtils.startPage(10);
 
         List<ContentVo> contentVos = contentMapper.selectContentList(contentEntity);
         //获取文件url列表
@@ -68,6 +67,8 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
         ContentEntity contentEntity = new ContentEntity();
         contentEntity.getParams().put("orderBy", "newest");
         contentEntity.setStatus(1);
+        //开始分页
+        PageUtils.startPage(WEB_PAGE_SIZE);
 
         return page(contentEntity);
     }
@@ -77,6 +78,8 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
         ContentEntity contentEntity = new ContentEntity();
         contentEntity.setStatus(1);
         contentEntity.getParams().put("orderBy", "hotContent");
+        //开始分页
+        PageUtils.startPage(WEB_PAGE_SIZE);
 
         return page(contentEntity);
     }
@@ -84,7 +87,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
     @Override
     public PageResult<ContentVo> getLoveContentByUserId(Long userId) {
         //开始分页
-        PageUtils.startPage(10);
+        PageUtils.startPage(WEB_PAGE_SIZE);
         List<Long> contentIds = contentMapper.selectLoveContentList(userId);
         //获取总点赞的墙数量
         long total = new PageInfo(contentIds).getTotal();
@@ -99,7 +102,8 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
         ContentEntity contentEntity = new ContentEntity();
         contentEntity.setUserId(SecurityUtils.getUserId());
         contentEntity.getParams().put("orderBy", "newest");
-
+        //开始分页
+        PageUtils.startPage(WEB_PAGE_SIZE);
         return page(contentEntity);
     }
 
@@ -131,7 +135,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
         contentEntity.setContentId(IdWorker.getId());
         contentEntity.setStatus(0);
         //保存数据库
-        fileService.updateContentFile(sendContentVo.getFileList(),contentEntity.getContentId());
+        fileService.updateContentFile(sendContentVo.getFileList(), contentEntity.getContentId());
         return contentMapper.insert(contentEntity);
     }
 
@@ -139,6 +143,12 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
     public int updateContent(ContentEntity content) {
 
         return contentMapper.updateById(content);
+    }
+
+    @Override
+    public List<ContentEntity> getSimpleHotContent() {
+
+        return contentMapper.getSimpleHotContent();
     }
 
 

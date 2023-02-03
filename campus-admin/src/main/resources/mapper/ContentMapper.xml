@@ -169,4 +169,17 @@
         order by c.create_time DESC
     </select>
 
+    <select id="getSimpleHotContent" resultType="com.oddfar.campus.business.domain.entity.ContentEntity">
+        SELECT
+            (
+                CASE WHEN LENGTH(c.content)>20
+                         THEN CONCAT(SUBSTRING(c.content,1,10),'...')
+                     ELSE c.content END
+                ) AS content, c.content_id, c.love_count
+        FROM campus_content c
+        WHERE c.del_flag = '0'
+        ORDER BY c.love_count DESC,c.create_time DESC
+            LIMIT 0,10
+    </select>
+
 </mapper>

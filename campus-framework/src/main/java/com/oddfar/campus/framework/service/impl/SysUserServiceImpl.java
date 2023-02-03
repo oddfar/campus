@@ -6,6 +6,7 @@ import com.oddfar.campus.common.domain.entity.SysUserEntity;
 import com.oddfar.campus.common.domain.entity.SysUserRoleEntity;
 import com.oddfar.campus.common.exception.ServiceException;
 import com.oddfar.campus.common.utils.StringUtils;
+import com.oddfar.campus.framework.api.sysconfig.ConfigExpander;
 import com.oddfar.campus.framework.mapper.SysRoleMapper;
 import com.oddfar.campus.framework.mapper.SysUserMapper;
 import com.oddfar.campus.framework.mapper.SysUserRoleMapper;
@@ -38,12 +39,20 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public SysUserEntity selectUserByUserName(String userName) {
-        return userMapper.selectUserByUserName(userName);
+        SysUserEntity userEntity = userMapper.selectUserByUserName(userName);
+        if ( userEntity != null &&StringUtils.isEmpty(userEntity.getAvatar())) {
+            userEntity.setAvatar(ConfigExpander.getUserDefaultAvatar());
+        }
+        return userEntity;
     }
 
     @Override
     public SysUserEntity selectUserById(Long userId) {
-        return userMapper.selectUserById(userId);
+        SysUserEntity userEntity = userMapper.selectUserById(userId);
+        if (userEntity != null && StringUtils.isEmpty(userEntity.getAvatar())) {
+            userEntity.setAvatar(ConfigExpander.getUserDefaultAvatar());
+        }
+        return userEntity;
     }
 
     @Override
@@ -66,8 +75,25 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
+    public boolean registerUser(SysUserEntity user) {
+        return userMapper.insert(user) > 0;
+    }
+
+    @Override
     @Transactional
     public int insertUser(SysUserEntity user) {
+        if (StringUtils.isNotEmpty(user.getUserName())
+                && !checkUserNameUnique(user)) {
+            throw new ServiceException("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
+        }
+        if (StringUtils.isNotEmpty(user.getPhonenumber())
+                && !(checkPhoneUnique(user))) {
+            throw new ServiceException("新增用户'" + user.getUserName() + "'失败，手机号码已存在");
+        }
+        if (StringUtils.isNotEmpty(user.getEmail())
+                && !(checkEmailUnique(user))) {
+            throw new ServiceException("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
+        }
         // 新增用户信息
         int rows = userMapper.insert(user);
         // 新增用户与角色管理
@@ -78,6 +104,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     @Transactional
     public int updateUser(SysUserEntity user) {
+
         Long userId = user.getUserId();
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
@@ -135,6 +162,16 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public int resetUserPwd(String userName, String password) {
         return userMapper.resetUserPwd(userName, password);
+    }
+
+    @Override
+    public boolean checkUserNameUnique(SysUserEntity user) {
+        Long userId = StringUtils.isNull(user.getUserId()) ? -1L : user.getUserId();
+        SysUserEntity info = userMapper.checkUserNameUnique(user.getUserName());
+        if (StringUtils.isNotNull(info) && info.getUserId().longValue() != userId.longValue()) {
+            return false;
+        }
+        return true;
     }
 
     @Override

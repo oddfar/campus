@@ -97,7 +97,7 @@ public interface SysConfigService {
     /**
      * 重置参数缓存数据
      */
-     void resetConfigCache();
+    void resetConfigCache();
 
 
 }

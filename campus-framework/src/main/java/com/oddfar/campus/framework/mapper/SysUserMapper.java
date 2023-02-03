@@ -94,4 +94,15 @@ public interface SysUserMapper extends BaseMapperX<SysUserEntity> {
     int resetUserPwd(String userName, String password);
 
 
+    /**
+     * 校验用户名称是否唯一
+     *
+     * @param userName 用户名称
+     * @return 结果
+     */
+    default SysUserEntity checkUserNameUnique(String userName){
+        return selectOne(new LambdaQueryWrapperX<SysUserEntity>().eq(SysUserEntity::getUserName, userName));
+    }
+
+
 }

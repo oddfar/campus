@@ -32,6 +32,7 @@ public class UserActionController {
     @Autowired
     private CampusFileService campusFileService;
 
+
     /**
      * 点赞
      */
@@ -67,4 +68,6 @@ public class UserActionController {
         }
         return R.error("上传异常");
     }
+
+
 }

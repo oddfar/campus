@@ -52,6 +52,14 @@ public interface SysUserService {
     String selectUserRoleGroup(String userName);
 
     /**
+     * 注册用户信息
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+     boolean registerUser(SysUserEntity user);
+
+    /**
      * 新增用户信息
      *
      * @param user 用户信息
@@ -131,6 +139,14 @@ public interface SysUserService {
      * @return 结果
      */
      int resetUserPwd(String userName, String password);
+
+    /**
+     * 校验用户名称是否唯一
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+     boolean checkUserNameUnique(SysUserEntity user);
 
     /**
      * 校验手机号码是否唯一

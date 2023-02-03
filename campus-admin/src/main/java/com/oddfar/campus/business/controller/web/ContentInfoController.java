@@ -38,9 +38,14 @@ public class ContentInfoController {
      * @return
      */
     @Anonymous
-    @PostMapping(value = "/contentList", name = "查询信息墙内容列表")
-    public R getContentList(@RequestBody(required = false) ContentQueryVo contentQueryVo) {
+    @GetMapping(value = "/contentList", name = "查询信息墙内容列表")
+    public R getContentList(ContentQueryVo contentQueryVo) {
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //最新墙 热门墙等等。。。
         String meta = Convert.toStr(contentQueryVo.getCategoryId(), "1");
         PageResult<ContentVo> page = null;
@@ -68,6 +73,19 @@ public class ContentInfoController {
         }
         r.put("loveContentIds", loveContentIds);
         return r;
+    }
+
+    /**
+     * 查询简单热门信息墙内容列表
+     *
+     * @return
+     */
+    @Anonymous
+    @GetMapping(value = "/simpleHotContent", name = "查询信息墙内容列表")
+    public R getSimpleHotContent() {
+
+        List<ContentEntity> simpleHotContent = contentService.getSimpleHotContent();
+        return R.ok(simpleHotContent);
     }
 
     /**
