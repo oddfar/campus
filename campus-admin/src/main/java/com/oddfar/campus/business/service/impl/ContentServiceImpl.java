@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity>
         implements ContentService {
 
-    private static final  int WEB_PAGE_SIZE = 5;
+    private static final int WEB_PAGE_SIZE = 5;
     @Resource
     private ContentMapper contentMapper;
     @Resource
@@ -111,8 +111,10 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
     @Override
     public ContentVo selectContentByContentId(ContentEntity contentEntity) {
         ContentVo contentVo = contentMapper.selectContentByContent(contentEntity);
-        //设置文件
-        setFileByContentEntity(contentVo);
+        if (contentVo != null) {
+            //设置文件
+            setFileByContentEntity(contentVo);
+        }
         return contentVo;
     }
 
@@ -151,6 +153,16 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
         return contentMapper.getSimpleHotContent();
     }
 
+    @Override
+    public boolean checkOwnContent(Long contentId) {
+        ContentEntity contentEntity = contentMapper.selectById(contentId);
+        if (contentEntity.getUserId().equals(SecurityUtils.getUserId())){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 
     /**
      * 文件 分类核对
@@ -158,6 +170,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
      * @param sendContentVo
      */
     private void assertAllowed(SendContentVo sendContentVo) {
+
         CategoryEntity category = categoryService.getById(sendContentVo.getCategoryId());
         if (category == null) {
             throw new ServiceException(CampusBizCodeEnum.CATEGORY_NOT_EXIST.getMsg(),
@@ -191,7 +204,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
                 }
             }
             //判断文件是否都存在
-            if (!fileService.fileExist(sendContentVo.getFileList())) {
+            if (!fileService.fileExist(sendContentVo.getFileList(), sendContentVo.getType())) {
                 throw new ServiceException(CampusBizCodeEnum.CONTENT_FILE_EXCEPTION.getMsg(),
                         CampusBizCodeEnum.CONTENT_FILE_EXCEPTION.getCode());
             }

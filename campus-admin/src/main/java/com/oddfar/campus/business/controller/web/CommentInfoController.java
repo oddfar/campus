@@ -12,9 +12,7 @@ import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.enums.ResBizTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/campus")
@@ -31,7 +29,10 @@ public class CommentInfoController {
     @GetMapping(value = "/getOneLevelComment", name = "查询一级评论")
     public R getOneLevelComment(CommentEntity commentEntity) {
         PageResult<CommentVo> commentVos = commentService.selectOneLevel(commentEntity);
-        return R.ok().put(commentVos);
+        R r = new R();
+        r.put(commentVos);
+        r.put("allTotal",commentService.selectCommentCount(commentEntity.getContentId()));
+        return r;
     }
 
     /**
@@ -48,13 +49,12 @@ public class CommentInfoController {
      * 添加评论
      */
     @PreAuthorize("@ss.resourceAuth()")
-    @GetMapping(value = "/toComment", name = "添加评论")
-    public R toComment(ToCommentVo toCommentVo) {
+    @PostMapping(value = "/toComment", name = "添加评论")
+    public R toComment(@RequestBody ToCommentVo toCommentVo) {
         CommentEntity commentEntity = new CommentEntity();
         BeanUtil.copyProperties(toCommentVo, commentEntity);
 
-        commentService.insertComment(commentEntity);
-        return R.ok();
+        return R.ok(commentService.insertComment(commentEntity));
     }
 
 

@@ -49,5 +49,7 @@ public interface CampusFileService extends IService<CampusFileEntity> {
      * @param fileId
      * @return
      */
-    boolean fileExist(List<Long> fileId);
+    boolean fileExist(List<Long> fileId,int type);
+
+
 }

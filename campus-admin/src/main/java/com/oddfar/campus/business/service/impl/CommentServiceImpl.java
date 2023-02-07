@@ -44,6 +44,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentEntity
 //        comment.setPageNum(firstIndex);
 
         ContentEntity content = contentMapper.selectById(comment.getContentId());
+        comment.setCommentId(content.getContentId());
 
         if (content != null) {
             //开始分页，固定大小5
@@ -57,6 +58,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentEntity
                 oneLevel.addAll(oneLevelChild);
             }
             //封装分页数据
+//            return new PageResult<CommentVo>(oneLevel, selectCommentCount(content.getContentId()));
             return PageUtils.getPageResult(oneLevel);
         } else {
             return null;
@@ -74,28 +76,35 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentEntity
     }
 
     @Override
+    public Long selectCommentCount(Long contentId) {
+        return commentMapper.selectCount("content_id", contentId);
+    }
+
+    @Override
     public int insertComment(CommentEntity comment) {
         Long userId = SecurityUtils.getUserId();
         if (comment.getContentId() != null) {
             //添加一级评论
             ContentEntity contentEntity = contentMapper.selectById(comment.getContentId());
-            if (contentEntity == null) {
-                throw new ServiceException(CampusBizCodeEnum.CONTENT_IS_NULL.getMsg(), CampusBizCodeEnum.CONTENT_IS_NULL.getCode());
+            if (contentEntity == null || contentEntity.getStatus() != 1) {
+                throw new ServiceException(CampusBizCodeEnum.CONTENT_OPERATION_PROHIBITED.getMsg(),
+                        CampusBizCodeEnum.CONTENT_OPERATION_PROHIBITED.getCode());
             }
 
         } else {
             //给评论添加评论
             CommentEntity commentEntity = commentMapper.selectById(comment.getCommentId());
             if (commentEntity == null) {
-                throw new ServiceException(CampusBizCodeEnum.COMMENT_IS_NULL.getMsg(), CampusBizCodeEnum.COMMENT_IS_NULL.getCode());
+                throw new ServiceException(CampusBizCodeEnum.COMMENT_IS_NULL.getMsg(),
+                        CampusBizCodeEnum.COMMENT_IS_NULL.getCode());
             }
 
             comment.setParentId(commentEntity.getCommentId());
             //设置一级评论id
-            if(commentEntity.getParentId()==0){
+            if (commentEntity.getParentId() == 0) {
                 comment.setOneLevelId(commentEntity.getCommentId());
                 comment.setToUserId(null);
-            }else {
+            } else {
                 comment.setOneLevelId(commentEntity.getOneLevelId());
                 comment.setToUserId(commentEntity.getUserId());
             }
@@ -114,14 +123,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, CommentEntity
         return commentMapper.updateById(comment);
     }
 
-    /**
-     * 添加一级评论
-     *
-     * @param comment
-     */
-    private void insertOneLevelComment(CommentEntity comment) {
-
-    }
 }
 
 

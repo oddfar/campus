@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -116,7 +117,7 @@ public class CampusFileServiceImpl extends ServiceImpl<CampusFileMapper, CampusF
     }
 
     @Override
-    public boolean fileExist(List<Long> fileIds) {
+    public boolean fileExist(List<Long> fileIds,int type) {
         if (fileIds.size() == 0) {
             return false;
         }
@@ -148,6 +149,7 @@ public class CampusFileServiceImpl extends ServiceImpl<CampusFileMapper, CampusF
         campusFileEntity.setFileId(IdWorker.getId());
         campusFileEntity.setUserId(SecurityUtils.getUserId());
         campusFileEntity.setUrl(path);
+        campusFileEntity.setCreateTime(new Date());
         campusFileMapper.insert(campusFileEntity);
         return campusFileEntity;
     }

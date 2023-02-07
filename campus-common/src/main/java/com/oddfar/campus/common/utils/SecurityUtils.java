@@ -45,7 +45,7 @@ public class SecurityUtils {
         try {
             LoginUser loginUser = (LoginUser) getAuthentication().getPrincipal();
             //用户不正常
-            if(!loginUser.getUser().getStatus().equals(UserConstants.NORMAL)){
+            if (!loginUser.getUser().getStatus().equals(UserConstants.NORMAL)) {
                 throw new ServiceException("用户被禁止", HttpStatus.FORBIDDEN);
             }
             return loginUser;
@@ -56,17 +56,19 @@ public class SecurityUtils {
 
     /**
      * 是否登录，true登录
+     *
      * @return
      */
-    public static boolean isLogin(){
-        Authentication auth =getAuthentication();
+    public static boolean isLogin() {
+        Authentication auth = getAuthentication();
         if (auth instanceof AnonymousAuthenticationToken) {
             return false;
-        }else {
+        } else {
             return true;
         }
 
     }
+
     /**
      * 获取Authentication
      */

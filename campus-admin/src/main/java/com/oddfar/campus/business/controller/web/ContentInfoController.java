@@ -8,6 +8,7 @@ import com.oddfar.campus.business.service.ContentLoveService;
 import com.oddfar.campus.business.service.ContentService;
 import com.oddfar.campus.common.annotation.Anonymous;
 import com.oddfar.campus.common.annotation.ApiResource;
+import com.oddfar.campus.common.core.page.PageUtils;
 import com.oddfar.campus.common.core.text.Convert;
 import com.oddfar.campus.common.domain.PageResult;
 import com.oddfar.campus.common.domain.R;
@@ -98,6 +99,11 @@ public class ContentInfoController {
         contentEntity.setContentId(id);
         contentEntity.setStatus(1);
 
+        if (SecurityUtils.isLogin()) {
+            if (contentService.checkOwnContent(contentEntity.getContentId())) {
+                contentEntity.setStatus(null);
+            }
+        }
         ContentVo contentVo = contentService.selectContentByContentId(contentEntity);
         R r = new R();
         if (contentVo != null) {
@@ -145,6 +151,28 @@ public class ContentInfoController {
     public R toContent(@Validated @RequestBody SendContentVo sendContentVo) {
 
         return R.ok(contentService.sendContent(sendContentVo));
+    }
+
+    /**
+     * 删除校园墙内容
+     */
+    @PreAuthorize("@ss.resourceAuth()")
+    @DeleteMapping("/delContent/{contentIds}")
+    public R delContent(@PathVariable Long contentIds) {
+        return R.ok(contentService.removeById(contentIds));
+    }
+
+    /**
+     * 查看自己的信息墙
+     */
+    @PreAuthorize("@ss.resourceAuth()")
+    @PostMapping("/ownContents")
+    public R ownContents() {
+        ContentEntity contentEntity = new ContentEntity();
+        contentEntity.setUserId(SecurityUtils.getUserId());
+        PageUtils.startPage(10);
+        PageResult<ContentVo> page = contentService.page(contentEntity);
+        return R.ok().put(page);
     }
 
 }

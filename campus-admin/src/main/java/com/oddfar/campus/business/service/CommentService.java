@@ -31,6 +31,13 @@ public interface CommentService extends IService<CommentEntity> {
     PageResult<CommentVo> selectOneLevelChild(CommentEntity comment);
 
     /**
+     * 获取信息墙的评论数量
+     * @param contentId
+     * @return
+     */
+    Long selectCommentCount(Long contentId);
+
+    /**
      * 新增评论
      *
      * @param comment 评论

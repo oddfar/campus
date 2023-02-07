@@ -29,6 +29,7 @@ public interface ContentService extends IService<ContentEntity> {
      */
     PageResult<ContentVo> hotPage();
 
+
     /**
      * 查询某用户的点赞墙列表
      *
@@ -74,4 +75,11 @@ public interface ContentService extends IService<ContentEntity> {
      * @return
      */
     List<ContentEntity> getSimpleHotContent();
+
+    /**
+     * 检测是否自己发布的信息墙
+     * @param contentId
+     * @return
+     */
+    boolean checkOwnContent(Long contentId);
 }

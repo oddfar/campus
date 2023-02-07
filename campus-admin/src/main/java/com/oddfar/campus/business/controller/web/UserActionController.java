@@ -9,10 +9,7 @@ import com.oddfar.campus.common.enums.ResBizTypeEnum;
 import com.oddfar.campus.common.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -48,7 +45,7 @@ public class UserActionController {
      * 图片文件上传
      */
     @PreAuthorize("@ss.resourceAuth()")
-    @GetMapping(value = "/imageUpload", name = "图片文件上传")
+    @PostMapping(value = "/imageUpload", name = "图片文件上传")
     public R imageUpload(MultipartFile file) {
         if (!file.isEmpty()) {
             return R.ok(campusFileService.fileUploadImage(file));
@@ -60,7 +57,7 @@ public class UserActionController {
      * 视频文件上传
      */
     @PreAuthorize("@ss.resourceAuth()")
-    @GetMapping(value = "/videoUpload", name = "视频文件上传")
+    @PostMapping(value = "/videoUpload", name = "视频文件上传")
     public R videoUpload(MultipartFile file) {
         if (!file.isEmpty()) {
 
