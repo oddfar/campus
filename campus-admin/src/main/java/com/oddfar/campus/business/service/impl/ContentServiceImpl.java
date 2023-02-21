@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageInfo;
+import com.oddfar.campus.business.core.expander.CampusConfigExpander;
 import com.oddfar.campus.business.domain.entity.CategoryEntity;
 import com.oddfar.campus.business.domain.entity.ContentEntity;
 import com.oddfar.campus.business.domain.entity.ContentTagEntity;
@@ -54,6 +55,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
         setQueryContentEntity(contentEntity);
 
         List<ContentVo> contentVos = contentMapper.selectContentList(contentEntity);
+        setAnonymous(contentVos);
         //获取文件url列表
         setFileListByContentVos(contentVos);
         //获取标签
@@ -156,9 +158,9 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
     @Override
     public boolean checkOwnContent(Long contentId) {
         ContentEntity contentEntity = contentMapper.selectById(contentId);
-        if (contentEntity.getUserId().equals(SecurityUtils.getUserId())){
+        if (contentEntity.getUserId().equals(SecurityUtils.getUserId())) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -309,6 +311,26 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
         }
 
     }
+
+    /**
+     * 设置匿名数据
+     * @param contentVos
+     */
+    private void setAnonymous(List<ContentVo> contentVos) {
+        for (ContentVo contentVo : contentVos) {
+            if (contentVo.getIsAnonymous() == 1) {
+                contentVo.setUserId(null);
+                Map<String, Object> params = contentVo.getParams();
+                params.put("avatar", CampusConfigExpander.getCampusAnonymousImage());
+                params.put("nickName", "匿名用户");
+                params.put("userId", null);
+                params.put("userName", null);
+
+            }
+        }
+
+    }
+
 
 }
 

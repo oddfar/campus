@@ -16,6 +16,7 @@ public interface SysUserMapper extends BaseMapperX<SysUserEntity> {
                 .likeIfPresent(SysUserEntity::getUserName, user.getUserName())
                 .likeIfPresent(SysUserEntity::getPhonenumber, user.getPhonenumber())
                 .eqIfPresent(SysUserEntity::getStatus, user.getStatus())
+                .betweenIfPresent(SysUserEntity::getCreateTime, user.getParams())
         );
     }
 
@@ -100,7 +101,7 @@ public interface SysUserMapper extends BaseMapperX<SysUserEntity> {
      * @param userName 用户名称
      * @return 结果
      */
-    default SysUserEntity checkUserNameUnique(String userName){
+    default SysUserEntity checkUserNameUnique(String userName) {
         return selectOne(new LambdaQueryWrapperX<SysUserEntity>().eq(SysUserEntity::getUserName, userName));
     }
 

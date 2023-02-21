@@ -41,12 +41,6 @@ public class ContentInfoController {
     @Anonymous
     @GetMapping(value = "/contentList", name = "查询信息墙内容列表")
     public R getContentList(ContentQueryVo contentQueryVo) {
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         //最新墙 热门墙等等。。。
         String meta = Convert.toStr(contentQueryVo.getCategoryId(), "1");
         PageResult<ContentVo> page = null;
