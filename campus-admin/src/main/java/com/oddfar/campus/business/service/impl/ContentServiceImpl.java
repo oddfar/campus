@@ -130,16 +130,18 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
 
         //设置信息
         contentEntity.setUserId(SecurityUtils.getUserId());
-        if (sendContentVo.getFileList() != null) {
+        if (sendContentVo.getFileList() != null && sendContentVo.getFileList().size() > 0) {
             contentEntity.setFileCount(sendContentVo.getFileList().size());
+            //保存数据库
+            fileService.updateContentFile(sendContentVo.getFileList(), contentEntity.getContentId());
         } else {
             contentEntity.setFileCount(0);
+            contentEntity.setType(0);
         }
 
         contentEntity.setContentId(IdWorker.getId());
         contentEntity.setStatus(0);
-        //保存数据库
-        fileService.updateContentFile(sendContentVo.getFileList(), contentEntity.getContentId());
+
         return contentMapper.insert(contentEntity);
     }
 
@@ -314,6 +316,7 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, ContentEntity
 
     /**
      * 设置匿名数据
+     *
      * @param contentVos
      */
     private void setAnonymous(List<ContentVo> contentVos) {
