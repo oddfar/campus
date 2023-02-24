@@ -4,6 +4,7 @@ import com.oddfar.campus.common.domain.PageResult;
 import com.oddfar.campus.common.domain.entity.SysUserEntity;
 
 import java.util.List;
+import java.util.Set;
 
 
 public interface SysUserService {
@@ -124,12 +125,20 @@ public interface SysUserService {
     void checkUserAllowed(SysUserEntity user);
 
     /**
-     * 用户授权角色
+     * 用户授权角色(先删除再添加)
      *
      * @param userId  用户ID
      * @param roleIds 角色组
      */
     void insertUserAuth(Long userId, Long[] roleIds);
+
+    /**
+     * 用户授权角色
+     *
+     * @param userId  用户ID
+     * @param roleKey 角色权限字符串
+     */
+    void insertUserAuth(Long userId, Set<String> roleKey);
 
     /**
      * 重置用户密码

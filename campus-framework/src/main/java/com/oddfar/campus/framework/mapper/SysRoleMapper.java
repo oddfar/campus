@@ -4,8 +4,10 @@ import com.oddfar.campus.common.core.BaseMapperX;
 import com.oddfar.campus.common.core.LambdaQueryWrapperX;
 import com.oddfar.campus.common.domain.PageResult;
 import com.oddfar.campus.common.domain.entity.SysRoleEntity;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface SysRoleMapper extends BaseMapperX<SysRoleEntity> {
     default PageResult<SysRoleEntity> selectPage(SysRoleEntity role) {
@@ -41,6 +43,12 @@ public interface SysRoleMapper extends BaseMapperX<SysRoleEntity> {
      */
     List<SysRoleEntity> selectRoleList(SysRoleEntity role);
 
+    /**
+     * 根据角色权限字符串查询角色数据
+     * @param RoleKeys
+     * @return
+     */
+    List<SysRoleEntity> selectRoleListByKey(@Param("RoleKeys") Set<String> RoleKeys);
 
     /**
      * 校验角色名称是否唯一

@@ -17,6 +17,7 @@
         <module>campus-common</module>
         <module>campus-framework</module>
         <module>campus-admin</module>
+        <module>campus-modular</module>
     </modules>
 
     <properties>
@@ -140,6 +141,18 @@
             <dependency>
                 <groupId>com.oddfar.campus</groupId>
                 <artifactId>campus-common</artifactId>
+                <version>${campus.version}</version>
+            </dependency>
+            <!-- 系统模块-->
+            <dependency>
+                <groupId>com.oddfar.campus</groupId>
+                <artifactId>campus-framework</artifactId>
+                <version>${campus.version}</version>
+            </dependency>
+            <!--后台管理-->
+            <dependency>
+                <groupId>com.oddfar.campus</groupId>
+                <artifactId>campus-admin</artifactId>
                 <version>${campus.version}</version>
             </dependency>
         </dependencies>

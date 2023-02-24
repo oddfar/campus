@@ -10,6 +10,7 @@ import com.oddfar.campus.framework.api.sysconfig.ConfigExpander;
 import com.oddfar.campus.framework.mapper.SysRoleMapper;
 import com.oddfar.campus.framework.mapper.SysUserMapper;
 import com.oddfar.campus.framework.mapper.SysUserRoleMapper;
+import com.oddfar.campus.framework.service.SysRoleService;
 import com.oddfar.campus.framework.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,11 +28,12 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserMapper userMapper;
-
     @Autowired
     private SysUserRoleMapper userRoleMapper;
     @Autowired
     private SysRoleMapper roleMapper;
+    @Autowired
+    private SysRoleService roleService;
 
     @Override
     public PageResult<SysUserEntity> page(SysUserEntity sysUserEntity) {
@@ -157,6 +160,20 @@ public class SysUserServiceImpl implements SysUserService {
     public void insertUserAuth(Long userId, Long[] roleIds) {
         userRoleMapper.deleteUserRoleByUserId(userId);
         insertUserRole(userId, roleIds);
+    }
+
+    @Override
+    public void insertUserAuth(Long userId, Set<String> roleKey) {
+        //查询现有的权限字符
+        Set<String> roleSet = roleService.selectRolePermissionByUserId(userId);
+        roleKey.addAll(roleSet);
+
+        List<SysRoleEntity> sysRoleList = roleMapper.selectRoleListByKey(roleKey);
+        List<Long> roleIds = sysRoleList.stream().map(SysRoleEntity::getRoleId).collect(Collectors.toList());
+
+        userRoleMapper.deleteUserRoleByUserId(userId);
+        insertUserRole(userId, roleIds.toArray(new Long[0]));
+
     }
 
     @Override

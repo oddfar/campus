@@ -87,6 +87,11 @@ public class SysRoleEntity extends BaseEntity {
     @TableField(exist = false)
     private Set<String> permissions;
 
+    /**
+     * 备注
+     */
+    private String remark;
+
     public SysRoleEntity(Long roleId) {
         this.roleId = roleId;
     }

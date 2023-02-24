@@ -71,6 +71,14 @@
         order by r.role_sort
     </select>
 
+    <select id="selectRoleListByKey" resultMap="SysRoleResult">
+        <include refid="selectRoleVo"/>
+        where r.del_flag = '0'
+        and r.role_key in  <foreach item="roleKey"  collection="RoleKeys" open="(" separator="," close=")">
+                              #{roleKey}
+                           </foreach>
+    </select>
+
     <select id="checkRoleNameUnique" parameterType="String" resultMap="SysRoleResult">
         <include refid="selectRoleVo"/>
         where r.role_name=#{roleName} and r.del_flag = '0' limit 1
@@ -85,5 +93,6 @@
         <include refid="selectRoleVo"/>
         WHERE r.del_flag = '0' and u.user_name = #{userName}
     </select>
+
 
 </mapper>
