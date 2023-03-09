@@ -110,7 +110,7 @@ public class SysPermissionService {
             res.add("*:*:*");
         } else {
             List<SysRoleEntity> roles = user.getRoles();
-            if (!roles.isEmpty()) {
+            if (roles != null && !roles.isEmpty()) {
                 for (SysRoleEntity role : roles) {
                     Set<String> code = resourceService.selectResourceCodeByRoleId(role.getRoleId());
                     res.addAll(code);
