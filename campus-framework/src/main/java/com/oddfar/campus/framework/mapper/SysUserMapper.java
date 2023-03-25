@@ -92,7 +92,7 @@ public interface SysUserMapper extends BaseMapperX<SysUserEntity> {
      * @param password 密码
      * @return 结果
      */
-    int resetUserPwd(String userName, String password);
+    int resetUserPwd(@Param("userName") String userName, @Param("password") String password);
 
 
     /**
