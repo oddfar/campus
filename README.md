@@ -21,6 +21,12 @@
 
 您可以根据此项目，快速开发毕设项目，无需注重系统代码，只需业务代码！
 
+## 项目文档
+
+- 项目在线预览地址：暂无
+
+- 项目文档：<https://oddfar.github.io/campus-doc/>
+
 ## 贡献代码
 
 若您有好的想法，发现一些 **BUG** 并修复了，欢迎提交 **Pull Request** 参与开源贡献
@@ -49,15 +55,27 @@
 
 
 
-- 案例：校园信息墙
+> 案例：校园信息墙
 
-  <https://github.com/oddfar/campus-example>
+<https://github.com/oddfar/campus-example>
+
+网页端
 
 | web                                                          |                                                              |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | ![image-20230221091804015](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230221091804015.png) | ![image-20230221091942563](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230221091942563.png) |
 | ![image-20230221092022247](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230221092022247.png) | ![image-20230221092059047](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230221092059047.png) |
 | ![image-20230221092122331](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230221092122331.png) | ![image-20230221092152935](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230221092152935.png) |
+
+移动端（小程序）
+
+| 移动端                                                       |                                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![image-20230412210057613](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230412210057613.png) | ![image-20230412210148423](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230412210148423.png) | ![image-20230412210214019](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230412210214019.png) |
+| ![image-20230412210256253](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230412210256253.png) | ![image-20230412210328222](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230412210328222.png) | ![image-20230412210405497](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230412210405497.png) |
+| ![image-20230412210534659](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230412210534659.png) | ![image-20230412210606552](https://gcore.jsdelivr.net/gh/oddfar/static/campus/doc/image-20230412210606552.png) |                                                              |
+
+
 
 ## 鸣谢
 
