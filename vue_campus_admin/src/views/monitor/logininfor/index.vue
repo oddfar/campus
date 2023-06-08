@@ -19,6 +19,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
+        <el-form-item label="用户id" prop="userId">
+        <el-input
+          v-model="queryParams.userId"
+          placeholder="请输入用户id"
+          clearable
+          style="width: 240px;"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select
           v-model="queryParams.status"
@@ -162,6 +171,7 @@ export default {
         pageSize: 10,
         ipaddr: undefined,
         userName: undefined,
+        userId:undefined,
         status: undefined
       }
     };

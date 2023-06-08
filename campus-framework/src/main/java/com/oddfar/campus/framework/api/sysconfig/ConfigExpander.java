@@ -1,5 +1,7 @@
 package com.oddfar.campus.framework.api.sysconfig;
 
+import cn.hutool.core.convert.Convert;
+
 public class ConfigExpander {
     /**
      * 用户默认头像url
@@ -10,8 +12,6 @@ public class ConfigExpander {
 
     /**
      * 验证码类型
-     *
-     * @return
      */
     public static String getLoginCaptchaType() {
         return ConfigContext.me().selectConfigByKey("sys.login.captchaType", String.class, "math");
@@ -19,8 +19,6 @@ public class ConfigExpander {
 
     /**
      * 获取文件保存目录
-     *
-     * @return
      */
     public static String getFileProfile() {
 
@@ -42,6 +40,17 @@ public class ConfigExpander {
      */
     public static String getAvatarPath() {
         return getFileProfile() + "/avatar";
+    }
+
+
+    /**
+     * 全局日志记录，开启则所有请求都将记录日志
+     */
+    public static Boolean getGlobalControllerOpenFlag() {
+        String flag = ConfigContext.me().selectConfigByKey("sys.log.global.flag", String.class, "false");
+
+        return Convert.toBool(flag);
+
     }
 
 }

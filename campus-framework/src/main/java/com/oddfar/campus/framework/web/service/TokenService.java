@@ -58,7 +58,7 @@ public class TokenService {
      */
     public LoginUser getLoginUser(HttpServletRequest request) {
         LoginUserToken loginUserToken = getLoginUserToken(request);
-        if (StringUtils.isNotNull(loginUserToken)){
+        if (StringUtils.isNotNull(loginUserToken)) {
             LoginUser user = redisCache.getCacheObject(getLoginKey(loginUserToken.getUserId()));
             return user;
         }

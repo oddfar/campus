@@ -75,6 +75,14 @@ public class ServletUtils {
     }
 
     /**
+     * 获取request
+     */
+    public static HttpServletRequest getRequest2()
+    {
+        return getRequestAttributes().getRequest();
+    }
+
+    /**
      * 获取response
      */
     public static HttpServletResponse getResponse() {

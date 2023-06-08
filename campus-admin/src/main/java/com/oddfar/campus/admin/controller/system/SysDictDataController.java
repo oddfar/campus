@@ -1,5 +1,6 @@
 package com.oddfar.campus.admin.controller.system;
 
+import com.oddfar.campus.common.annotation.Anonymous;
 import com.oddfar.campus.common.annotation.ApiResource;
 import com.oddfar.campus.common.domain.PageResult;
 import com.oddfar.campus.common.domain.R;
@@ -27,8 +28,8 @@ public class SysDictDataController {
 
 
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
-    @GetMapping("/list")
-    public R page( SysDictDataEntity dictData) {
+    @GetMapping(value = "/list", name = "字典数据管理-分页")
+    public R page(SysDictDataEntity dictData) {
         PageResult<SysDictDataEntity> page = dictDataService.page(dictData);
         return R.ok().put(page);
     }
@@ -36,7 +37,8 @@ public class SysDictDataController {
     /**
      * 根据字典类型查询字典数据信息
      */
-    @GetMapping(value = "/type/{dictType}")
+    @GetMapping(value = "/type/{dictType}", name = "字典数据管理-根据字典类型查询字典数据信息")
+    @Anonymous
     public R dictType(@PathVariable String dictType) {
 
         List<SysDictDataEntity> data = dictTypeService.selectDictDataByType(dictType);
@@ -51,7 +53,7 @@ public class SysDictDataController {
      * 查询字典数据详细
      */
     @PreAuthorize("@ss.hasPermi('system:dict:query')")
-    @GetMapping(value = "/{dictCode}")
+    @GetMapping(value = "/{dictCode}", name = "字典数据管理-查询")
     public R getInfo(@PathVariable Long dictCode) {
         return R.ok(dictDataService.selectDictDataById(dictCode));
     }
@@ -61,7 +63,7 @@ public class SysDictDataController {
      * 新增字典类型
      */
     @PreAuthorize("@ss.hasPermi('system:dict:add')")
-    @PostMapping
+    @PostMapping(name = "字典数据管理-新增")
     public R add(@Validated @RequestBody SysDictDataEntity dict) {
         return R.ok(dictDataService.insertDictData(dict));
     }
@@ -70,7 +72,7 @@ public class SysDictDataController {
      * 修改保存字典类型
      */
     @PreAuthorize("@ss.hasPermi('system:dict:edit')")
-    @PutMapping
+    @PutMapping(name = "字典数据管理-修改")
     public R edit(@Validated @RequestBody SysDictDataEntity dict) {
         return R.ok(dictDataService.updateDictData(dict));
     }
@@ -79,7 +81,7 @@ public class SysDictDataController {
      * 删除字典类型
      */
     @PreAuthorize("@ss.hasPermi('system:dict:remove')")
-    @DeleteMapping("/{dictCodes}")
+    @DeleteMapping(value = "/{dictCodes}", name = "字典数据管理-删除")
     public R remove(@PathVariable Long[] dictCodes) {
         dictDataService.deleteDictDataByIds(dictCodes);
         return R.ok();

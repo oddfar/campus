@@ -6,7 +6,6 @@ import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.domain.entity.SysConfigEntity;
 import com.oddfar.campus.common.enums.ResBizTypeEnum;
 import com.oddfar.campus.framework.service.SysConfigService;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -17,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/system/config")
-@ApiResource(name = "参数配置管理" , resBizType = ResBizTypeEnum.SYSTEM)
+@ApiResource(name = "参数配置管理", resBizType = ResBizTypeEnum.SYSTEM)
 public class SysConfigController {
     @Autowired
     private SysConfigService configService;
 
-    @GetMapping(value = "page" , name = "分页")
+    @GetMapping(value = "page", name = "参数配置管理-分页")
     @PreAuthorize("@ss.hasPermi('system:config:list')")
     public R page(SysConfigEntity sysConfigEntity) {
         PageResult<SysConfigEntity> page = configService.page(sysConfigEntity);
@@ -30,8 +29,7 @@ public class SysConfigController {
         return R.ok().put(page);
     }
 
-    @GetMapping("{id}")
-    @Operation(summary = "信息")
+    @GetMapping(value = "{id}", name = "参数配置管理-查询id信息")
     @PreAuthorize("@ss.hasPermi('system:config:query')")
     public R getInfo(@PathVariable("id") Long id) {
         SysConfigEntity entity = configService.selectConfigById(id);
@@ -47,8 +45,7 @@ public class SysConfigController {
         return R.ok(configService.selectConfigByKey(configKey));
     }
 
-    @PostMapping
-    @Operation(summary = "保存")
+    @PostMapping(name = "参数配置管理-新增")
     @PreAuthorize("@ss.hasPermi('system:config:add')")
     public R add(@Validated @RequestBody SysConfigEntity config) {
         if (!configService.checkConfigKeyUnique(config)) {
@@ -58,8 +55,7 @@ public class SysConfigController {
 
     }
 
-    @PutMapping
-    @Operation(summary = "修改")
+    @PutMapping(name = "参数配置管理-修改")
     @PreAuthorize("@ss.hasPermi('system:config:edit')")
     public R edit(@Validated @RequestBody SysConfigEntity config) {
         if (!configService.checkConfigKeyUnique(config)) {
@@ -69,8 +65,7 @@ public class SysConfigController {
 
     }
 
-    @DeleteMapping("/{configIds}")
-    @Operation(summary = "删除")
+    @DeleteMapping(value = "/{configIds}", name = "参数配置管理-删除")
     @PreAuthorize("@ss.hasPermi('system:config:remove')")
     public R remove(@PathVariable Long[] configIds) {
         configService.deleteConfigByIds(configIds);
@@ -82,7 +77,7 @@ public class SysConfigController {
      * 刷新参数缓存
      */
     @PreAuthorize("@ss.hasPermi('system:config:remove')")
-    @DeleteMapping("/refreshCache")
+    @DeleteMapping(value = "/refreshCache", name = "参数配置管理-刷新缓存")
     public R refreshCache() {
         configService.resetConfigCache();
         return R.ok();

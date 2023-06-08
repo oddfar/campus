@@ -24,8 +24,13 @@
 ## 项目文档
 
 - 项目在线预览地址：暂无
-
 - 项目文档：<https://oddfar.github.io/campus-doc/>
+
+## 关注&交流
+
+欢迎各位老哥进群进行技术交流，为了防止广告进入，请添加我微信（备注：**Campus**），我会直接将你拉进**Campus交流群**
+
+<img src="https://note.oddfar.com/img/my-wechat.jpg" alt="wechat" style="height:280px;" />
 
 ## 贡献代码
 

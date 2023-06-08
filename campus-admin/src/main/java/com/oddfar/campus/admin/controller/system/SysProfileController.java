@@ -34,7 +34,7 @@ public class SysProfileController {
     /**
      * 个人信息
      */
-    @GetMapping
+    @GetMapping(name = "个人信息管理-查询")
     public R profile() {
         LoginUser loginUser = getLoginUser();
         SysUserEntity user = loginUser.getUser();
@@ -46,7 +46,7 @@ public class SysProfileController {
     /**
      * 修改用户
      */
-    @PutMapping
+    @PutMapping("个人信息管理-修改")
     public R updateProfile(@RequestBody SysUserEntity user) {
         LoginUser loginUser = getLoginUser();
         SysUserEntity sysUser = loginUser.getUser();
@@ -77,7 +77,7 @@ public class SysProfileController {
     /**
      * 重置密码
      */
-    @PutMapping("/updatePwd")
+    @PutMapping(value = "/updatePwd", name = "个人信息管理-重置密码")
     public R updatePwd(String oldPassword, String newPassword) {
         LoginUser loginUser = getLoginUser();
         String userName = loginUser.getUsername();
@@ -100,7 +100,7 @@ public class SysProfileController {
     /**
      * 头像上传
      */
-    @PostMapping("/avatar")
+    @PostMapping(value = "/avatar", name = "个人信息管理-头像上次")
     public R avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {
         if (!file.isEmpty()) {
             LoginUser loginUser = getLoginUser();

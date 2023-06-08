@@ -2,6 +2,7 @@ package com.oddfar.campus.business.controller;
 
 import com.oddfar.campus.common.annotation.Anonymous;
 import com.oddfar.campus.common.annotation.ApiResource;
+import com.oddfar.campus.common.annotation.Log;
 import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.enums.ResBizTypeEnum;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 @ApiResource(name = "测试", appCode = "test", resBizType = ResBizTypeEnum.BUSINESS)
+@Log
 public class TestController {
     /**
      * 需要接口权限

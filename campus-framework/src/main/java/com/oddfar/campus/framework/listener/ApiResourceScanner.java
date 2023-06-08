@@ -139,11 +139,12 @@ public class ApiResourceScanner implements BeanPostProcessor {
         ApiResource apiResource = controllerClass.getAnnotation(ApiResource.class);
         // 接口资源的类别
         resource.setResourceBizType(apiResource.resBizType().getCode());
-        resource.setAppCode(springApplicationName);
         resource.setModularName(apiResource.name());
         // 设置appCode
         if (StrUtil.isNotBlank(apiResource.appCode())) {
             resource.setAppCode(apiResource.appCode());
+        }else {
+            resource.setAppCode(springApplicationName);
         }
         //资源唯一编码
         String resourceCode = StrUtil.toUnderlineCase(resource.getAppCode()) + "." + StrUtil.toUnderlineCase(modular) + "." + StrUtil.toUnderlineCase(resource.getMethodName());

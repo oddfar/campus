@@ -1,10 +1,12 @@
 package com.oddfar.campus.admin.controller.system;
 
+import com.oddfar.campus.common.annotation.ApiResource;
 import com.oddfar.campus.common.constant.Constants;
 import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.domain.entity.SysMenuEntity;
 import com.oddfar.campus.common.domain.entity.SysUserEntity;
 import com.oddfar.campus.common.domain.model.LoginBody;
+import com.oddfar.campus.common.enums.ResBizTypeEnum;
 import com.oddfar.campus.common.utils.SecurityUtils;
 import com.oddfar.campus.framework.service.SysMenuService;
 import com.oddfar.campus.framework.web.service.SysLoginService;
@@ -17,6 +19,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping
+@ApiResource(name = "登录路由", resBizType = ResBizTypeEnum.SYSTEM)
 public class SysLoginController {
 
     @Autowired
@@ -33,7 +36,7 @@ public class SysLoginController {
      * @param loginBody 登录信息
      * @return 结果
      */
-    @PostMapping("/login")
+    @PostMapping(value = "/login", name = "登录方法")
     public R login(@RequestBody LoginBody loginBody) {
         R r = R.ok();
         // 生成令牌
@@ -48,7 +51,7 @@ public class SysLoginController {
      *
      * @return 用户信息
      */
-    @GetMapping("getInfo")
+    @GetMapping(value = "getInfo", name = "获取用户信息")
     public R getInfo() {
         SysUserEntity user = SecurityUtils.getLoginUser().getUser();
         // 角色集合
@@ -67,7 +70,7 @@ public class SysLoginController {
      *
      * @return 路由信息
      */
-    @GetMapping("getRouters")
+    @GetMapping(value = "getRouters", name = "获取路由信息")
     public R getRouters() {
         Long userId = SecurityUtils.getUserId();
         List<SysMenuEntity> menus = menuService.selectMenuTreeByUserId(userId);

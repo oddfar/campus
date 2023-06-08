@@ -10,7 +10,6 @@ public class ConfigContext {
 
     /**
      * 获取系统配置操作接口
-     *
      */
     public static SysConfigService me() {
         return SpringUtil.getBean(SysConfigService.class);

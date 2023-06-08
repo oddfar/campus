@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
+ * 配置实体类
  * @author zhiyuan
  */
 @Data

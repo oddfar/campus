@@ -2,6 +2,7 @@ package com.oddfar.campus.admin.controller.system;
 
 import cn.hutool.core.codec.Base64;
 import com.google.code.kaptcha.Producer;
+import com.oddfar.campus.common.annotation.Log;
 import com.oddfar.campus.common.constant.CacheConstants;
 import com.oddfar.campus.common.constant.Constants;
 import com.oddfar.campus.common.core.RedisCache;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @author ruoyi
  */
 @RestController
+@Log(openLog = false)
 public class CaptchaController {
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
@@ -42,7 +44,7 @@ public class CaptchaController {
     /**
      * 生成验证码
      */
-    @GetMapping("/captchaImage")
+    @GetMapping(value = "/captchaImage", name = "生产验证码")
     public R getCode(HttpServletResponse response) throws IOException {
         R ajax = R.ok();
         boolean captchaEnabled = configService.selectCaptchaEnabled();

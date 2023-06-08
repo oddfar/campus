@@ -1,14 +1,18 @@
 package com.oddfar.campus.framework.web.service;
 
 import com.oddfar.campus.common.constant.CacheConstants;
+import com.oddfar.campus.common.constant.Constants;
 import com.oddfar.campus.common.constant.UserConstants;
 import com.oddfar.campus.common.core.RedisCache;
 import com.oddfar.campus.common.domain.entity.SysUserEntity;
 import com.oddfar.campus.common.domain.model.RegisterBody;
 import com.oddfar.campus.common.exception.user.CaptchaException;
 import com.oddfar.campus.common.exception.user.CaptchaExpireException;
+import com.oddfar.campus.common.utils.MessageUtils;
 import com.oddfar.campus.common.utils.SecurityUtils;
 import com.oddfar.campus.common.utils.StringUtils;
+import com.oddfar.campus.framework.manager.AsyncFactory;
+import com.oddfar.campus.framework.manager.AsyncManager;
 import com.oddfar.campus.framework.service.SysConfigService;
 import com.oddfar.campus.framework.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +66,7 @@ public class SysRegisterService {
                 msg = "注册失败,请联系系统管理人员";
             } else {
                 //注册失败异步记录信息
-//                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.REGISTER, MessageUtils.message("user.register.success")));
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, null, Constants.REGISTER, MessageUtils.message("user.register.success")));
             }
         }
         return msg;

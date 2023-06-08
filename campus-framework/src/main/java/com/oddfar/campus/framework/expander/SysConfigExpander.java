@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * 系统配置读取
+ */
 @Component
 public class SysConfigExpander {
 

@@ -28,7 +28,7 @@ public class SysMenuController {
      * 获取菜单列表
      */
     @PreAuthorize("@ss.hasPermi('system:menu:list')")
-    @GetMapping("/list")
+    @GetMapping(value = "/list",name = "菜单管理-分页")
     public R list(SysMenuEntity menu) {
         List<SysMenuEntity> menus = menuService.selectMenuList(menu, getUserId());
         return R.ok(menus);
@@ -38,7 +38,7 @@ public class SysMenuController {
      * 根据菜单编号获取详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:menu:query')")
-    @GetMapping(value = "/{menuId}")
+    @GetMapping(value = "/{menuId}",name = "菜单管理-查询")
     public R getInfo(@PathVariable Long menuId) {
         return R.ok(menuService.selectMenuById(menuId));
     }
@@ -46,7 +46,7 @@ public class SysMenuController {
     /**
      * 获取菜单下拉树列表
      */
-    @GetMapping("/treeselect")
+    @GetMapping(value = "/treeselect",name = "菜单管理-获取菜单下拉树列表")
     public R treeSelect(SysMenuEntity menu) {
         List<SysMenuEntity> menus = menuService.selectMenuList(menu, getUserId());
         return R.ok(menuService.buildMenuTreeSelect(menus));
@@ -55,7 +55,7 @@ public class SysMenuController {
     /**
      * 加载对应角色菜单列表树
      */
-    @GetMapping(value = "/roleMenuTreeselect/{roleId}")
+    @GetMapping(value = "/roleMenuTreeselect/{roleId}",name = "菜单管理-加载对应角色菜单列表树")
     public R roleMenuTreeselect(@PathVariable("roleId") Long roleId) {
         List<SysMenuEntity> menus = menuService.selectMenuList(getUserId());
         R ajax = R.ok();
@@ -68,7 +68,7 @@ public class SysMenuController {
      * 新增菜单
      */
     @PreAuthorize("@ss.hasPermi('system:menu:add')")
-    @PostMapping
+    @PostMapping(name = "菜单管理-新增")
     public R add(@Validated @RequestBody SysMenuEntity menu) {
         if (!menuService.checkMenuNameUnique(menu)) {
             return R.error("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
@@ -82,7 +82,7 @@ public class SysMenuController {
      * 修改菜单
      */
     @PreAuthorize("@ss.hasPermi('system:menu:edit')")
-    @PutMapping
+    @PutMapping("菜单管理-修改")
     public R edit(@Validated @RequestBody SysMenuEntity menu) {
         if (!menuService.checkMenuNameUnique(menu)) {
             return R.error("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
@@ -98,7 +98,7 @@ public class SysMenuController {
      * 删除菜单
      */
     @PreAuthorize("@ss.hasPermi('system:menu:remove')")
-    @DeleteMapping("/{menuId}")
+    @DeleteMapping(value = "/{menuId}",name = "菜单管理-删除")
     public R remove(@PathVariable("menuId") Long menuId) {
         if (menuService.hasChildByMenuId(menuId)) {
             return R.error("存在子菜单,不允许删除");
