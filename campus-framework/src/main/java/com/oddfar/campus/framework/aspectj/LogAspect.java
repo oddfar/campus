@@ -7,6 +7,7 @@ import com.oddfar.campus.common.annotation.Log;
 import com.oddfar.campus.common.domain.entity.SysOperLogEntity;
 import com.oddfar.campus.common.domain.model.LoginUser;
 import com.oddfar.campus.common.enums.BusinessStatus;
+import com.oddfar.campus.common.filter.PropertyPreExcludeFilter;
 import com.oddfar.campus.common.utils.SecurityUtils;
 import com.oddfar.campus.common.utils.ServletUtils;
 import com.oddfar.campus.common.utils.StringUtils;
@@ -25,15 +26,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +49,13 @@ import java.util.Map;
 @Component
 public class LogAspect {
 
-    Logger log = LoggerFactory.getLogger(LogAspect.class);
+    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
+
+    /**
+     * 排除敏感属性字段
+     */
+    public static final String[] EXCLUDE_PROPERTIES = {"password", "oldPassword", "newPassword", "confirmPassword"};
+
 
     @Value("${spring.application.name:}")
     private String springApplicationName;
@@ -140,27 +148,6 @@ public class LogAspect {
         return propMap;
     }
 
-    /**
-     * 处理请求之前执行
-     *
-     * @param joinPoint 切点
-     * @throws Throwable
-     */
-//    @Before("webLog()")
-    public void doBefore(JoinPoint joinPoint) throws Throwable {
-
-        // 接收到请求，记录请求内容
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-
-        // 记录下请求内容
-        log.info("URL : " + request.getRequestURL().toString());
-        log.info("HTTP_METHOD : " + request.getMethod());
-        log.info("IP : " + request.getRemoteAddr());
-        log.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        log.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
-
-    }
 
     protected void handleLog(final JoinPoint joinPoint, Map<String, Object> annotationProp, final Exception e, Object jsonResult) {
 
@@ -248,12 +235,9 @@ public class LogAspect {
         String params = "";
         if (paramsArray != null && paramsArray.length > 0) {
             for (Object o : paramsArray) {
-//                if (StringUtils.isNotNull(o) && !isFilterObject(o))
-                if (StringUtils.isNotNull(o)) {
+                if (StringUtils.isNotNull(o) && !isFilterObject(o)) {
                     try {
-//                        String jsonObj = JSON.toJSONString(o, excludePropertyPreFilter());
-                        String jsonObj = JSON.toJSONString(o);
-
+                        String jsonObj = JSON.toJSONString(o, excludePropertyPreFilter());
                         params += jsonObj.toString() + " ";
                     } catch (Exception e) {
                     }
@@ -321,6 +305,40 @@ public class LogAspect {
 
         }
         return null;
+    }
+
+    /**
+     * 忽略敏感属性
+     */
+    public PropertyPreExcludeFilter excludePropertyPreFilter() {
+        return new PropertyPreExcludeFilter().addExcludes(EXCLUDE_PROPERTIES);
+    }
+
+    /**
+     * 判断是否需要过滤的对象。
+     *
+     * @param o 对象信息。
+     * @return 如果是需要过滤的对象，则返回true；否则返回false。
+     */
+    @SuppressWarnings("rawtypes")
+    public boolean isFilterObject(final Object o) {
+        Class<?> clazz = o.getClass();
+        if (clazz.isArray()) {
+            return clazz.getComponentType().isAssignableFrom(MultipartFile.class);
+        } else if (Collection.class.isAssignableFrom(clazz)) {
+            Collection collection = (Collection) o;
+            for (Object value : collection) {
+                return value instanceof MultipartFile;
+            }
+        } else if (Map.class.isAssignableFrom(clazz)) {
+            Map map = (Map) o;
+            for (Object value : map.entrySet()) {
+                Map.Entry entry = (Map.Entry) value;
+                return entry.getValue() instanceof MultipartFile;
+            }
+        }
+        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse
+                || o instanceof BindingResult;
     }
 
 }
