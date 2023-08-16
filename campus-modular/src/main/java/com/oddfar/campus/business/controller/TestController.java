@@ -5,6 +5,8 @@ import com.oddfar.campus.common.annotation.ApiResource;
 import com.oddfar.campus.common.annotation.Log;
 import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.enums.ResBizTypeEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @ApiResource(name = "测试", appCode = "test", resBizType = ResBizTypeEnum.BUSINESS)
 @Log
 public class TestController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestController.class);
+
+
     /**
      * 需要接口权限
      */
@@ -41,7 +46,7 @@ public class TestController {
     @Anonymous
     @GetMapping(value = "/3", name = "测试3的接口")
     public R test3() {
-
+        LOGGER.info("执行了test3");
         return R.ok();
     }
 

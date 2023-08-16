@@ -3,11 +3,10 @@ campus:
   # 名称
   name: oddfar-campus
   # 版本
-  version: 1.1.4
+  version: @campus.version@
 
 server:
   port: 8160
-
 
 spring:
   application:

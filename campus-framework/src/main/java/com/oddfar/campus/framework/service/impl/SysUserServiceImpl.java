@@ -13,11 +13,11 @@ import com.oddfar.campus.framework.mapper.SysUserMapper;
 import com.oddfar.campus.framework.mapper.SysUserRoleMapper;
 import com.oddfar.campus.framework.service.SysRoleService;
 import com.oddfar.campus.framework.service.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
 @Service
 public class SysUserServiceImpl implements SysUserService {
 
-    @Autowired
+    @Resource
     private SysUserMapper userMapper;
-    @Autowired
+    @Resource
     private SysUserRoleMapper userRoleMapper;
-    @Autowired
+    @Resource
     private SysRoleMapper roleMapper;
-    @Autowired
+    @Resource
     private SysRoleService roleService;
 
     @Override

@@ -9,9 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +16,8 @@ import java.util.Map;
 
 /**
  * Entity基类
+ *
+ * @author oddfar
  */
 @Data
 @AllArgsConstructor
@@ -26,8 +25,8 @@ import java.util.Map;
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private static final Integer PAGE_NUM = 1;
-    private static final Integer PAGE_SIZE = 10;
+//    private static final Integer PAGE_NUM = 1;
+//    private static final Integer PAGE_SIZE = 10;
 
 
     @TableField(fill = FieldFill.INSERT)
@@ -52,18 +51,18 @@ public class BaseEntity implements Serializable {
     @TableField(exist = false)
     private Map<String, Object> params;
 
-    @NotNull(message = "页码不能为空")
-    @Min(value = 1, message = "页码最小值为 1")
-    @TableField(exist = false)
-    @JsonIgnore
-    private Integer pageNum = PAGE_NUM;
+//    @NotNull(message = "页码不能为空")
+//    @Min(value = 1, message = "页码最小值为 1")
+//    @TableField(exist = false)
+//    @JsonIgnore
+//    private Integer pageNum = PAGE_NUM;
 
-    @NotNull(message = "每页条数不能为空")
-    @Min(value = 1, message = "每页条数最小值为 1")
-    @Max(value = 100, message = "每页条数最大值为 100")
-    @TableField(exist = false)
-    @JsonIgnore
-    private Integer pageSize = PAGE_SIZE;
+//    @NotNull(message = "每页条数不能为空")
+//    @Min(value = 1, message = "每页条数最小值为 1")
+//    @Max(value = 100, message = "每页条数最大值为 100")
+//    @TableField(exist = false)
+//    @JsonIgnore
+//    private Integer pageSize = PAGE_SIZE;
 
     public Map<String, Object> getParams() {
         if (params == null) {

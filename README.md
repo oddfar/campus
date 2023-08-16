@@ -4,8 +4,7 @@
   <a href="https://github.com/oddfar/campus/stargazers"><img src="https://img.shields.io/github/stars/oddfar/campus.svg"></a>
 	<a href="https://github.com/oddfar/campus/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
 </p>
-
-<p align="center"> Campus，一个简单的前后端分离后台管理系统 </p>
+<p align="center"> Campus，一个简单的前后端分离后台管理系统，RuoYi-Vue简单版 </p>
 
 <h2 align="center">Campus</h2>
 
@@ -13,9 +12,9 @@
 
 ## 项目介绍
 
-> 想重构之前的校园信息墙项目，又想学习若依项目，就手写了若依并修改了部分功能，于是有了这套后台系统，所以取名为campus
+> 想重构之前的校园信息墙项目，又想学习若依项目，就手写了 RuoYi-Vue 并修改了部分功能，于是有了这套后台系统，所以取名为campus
 
-**Campus** 一款简单的后台管理系统，快速开发框架，适合大学生开发毕设，或其他小项目。
+**Campus** 一款简单的后台管理系统，**RuoYi-Vue简单版**，快速开发框架，适合大学生开发毕设，或其他小项目。
 
 使用Spring Boot、Spring Security、MyBatis Plus、Jwt、Vue等技术
 
@@ -26,11 +25,33 @@
 - 项目在线预览地址：暂无
 - 项目文档：<https://oddfar.github.io/campus-doc/>
 
-## 关注&交流
+## 对比RuoYi
 
-欢迎各位老哥进群进行技术交流，为了防止广告进入，请添加我微信（备注：**Campus**），我会直接将你拉进**Campus交流群**
+### 功能差异
 
-<img src="https://note.oddfar.com/img/my-wechat.jpg" alt="wechat" style="height:280px;" />
+| 功能       | 本框架                                            | RuoYi             |
+| ---------- | ------------------------------------------------- | ----------------- |
+| 权限认证   | 增加接口管理，动态分配角色权限                    | 不支持动态分配    |
+| ORM框架    | 采用 Mybatis-Plus                                 | 采用 Mybatis      |
+| 数据分页   | 采用 Mybatis-Plus 分页插件<br/>框架对其进行了扩展 | 采用 PageHelper   |
+| 用户依据   | 涉及表使用用户ID判断，方便更新用户                | 根据用户userName  |
+| 数据库主键 | 采用 雪花ID                                       | 采用 数据库自增ID |
+
+### 内置功能
+
+- [x] 用户管理：用户的管理配置。
+- [x] 菜单管理：配置系统菜单，操作权限，按钮权限标识等。
+- [x] 角色管理：角色菜单权限分配。
+- [x] 字典管理：对系统中经常使用的一些较为固定的数据进行维护。
+- [x] 参数管理：对系统动态配置常用参数。
+- [x] 操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
+- [x] 登录日志：系统登录日志记录查询包含登录异常。
+
+新增
+
+- [x] 接口管理：动态分配角色接口权限
+
+
 
 ## 贡献代码
 

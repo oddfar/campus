@@ -9,9 +9,8 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
-*
-* @author 致远
-*/
+ * @author oddfar
+ */
 @Mapper
 public interface SysUserConvert {
     SysUserConvert INSTANCE = Mappers.getMapper(SysUserConvert.class);

@@ -1,5 +1,6 @@
 package com.oddfar.campus.common.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -14,10 +15,12 @@ public class SysRoleResourceEntity {
     /**
      * 资源编码
      */
+    @TableField
     private String resourceCode;
 
     /**
      * 角色ID
      */
+    @TableField
     private Long roleId;
 }
