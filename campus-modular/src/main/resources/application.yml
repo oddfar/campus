@@ -3,7 +3,7 @@ campus:
   # 名称
   name: oddfar-campus
   # 版本
-  version: @campus.version@
+  version: ${revision}
 
 server:
   port: 8160
