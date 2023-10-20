@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 基础测试
+ */
 @RestController
 @RequestMapping("/test")
 @ApiResource(name = "测试", appCode = "test", resBizType = ResBizTypeEnum.BUSINESS)

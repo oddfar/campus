@@ -5,6 +5,7 @@ import com.oddfar.campus.common.annotation.Anonymous;
 import com.oddfar.campus.common.annotation.Sensitive;
 import com.oddfar.campus.common.enums.SensitiveStrategy;
 import com.oddfar.campus.common.domain.R;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.Data;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class TestSensitiveController {
      */
     @GetMapping("/test")
     @Anonymous
+    @Operation(description = "测试数据脱敏")
     public R test() {
         TestSensitive testSensitive = new TestSensitive();
         testSensitive.setIdCard("123456200001011234");
