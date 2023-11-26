@@ -1,26 +1,28 @@
 package com.oddfar.campus.common.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 角色与接口资源关系表
  */
 @Data
 @TableName("sys_role_resource")
-public class SysRoleResourceEntity {
+public class SysRoleResourceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
      * 资源编码
      */
-    @TableField
     private String resourceCode;
 
     /**
      * 角色ID
      */
-    @TableField
+    @TableId(type = IdType.INPUT)
     private Long roleId;
 }
