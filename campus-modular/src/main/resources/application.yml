@@ -10,19 +10,9 @@ server:
 
 spring:
   application:
-    name: oddfar
-  #数据源配置
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/oddfar_campus?characterEncoding=utf-8&useSSL=true&serverTimezone=GMT%2B8
-    username: root
-    password: 123456789
-  #redis配置
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 0
-    timeout: 10s
+    name: ${campus.name}
+  profiles:
+    active: @profiles.active@
   # 文件上传
   servlet:
     multipart:
@@ -85,8 +75,21 @@ mybatis-plus:
   # 实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.oddfar.**.domain
   #mybatis-plus日志
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 自动驼峰命名规则（camel case）映射
+    mapUnderscoreToCamelCase: true
+    # MyBatis 自动映射策略
+    # NONE：不启用 PARTIAL：只对非嵌套 resultMap 自动映射 FULL：对所有 resultMap 自动映射
+    autoMappingBehavior: FULL
+    # MyBatis 自动映射时未知列或未知属性处理策
+    # NONE：不做处理 WARNING：打印相关警告 FAILING：抛出异常和详细信息
+    autoMappingUnknownColumnBehavior: NONE
+    # 更详细的日志输出 会有性能损耗 org.apache.ibatis.logging.stdout.StdOutImpl
+    # 关闭日志记录 (可单纯使用 p6spy 分析) org.apache.ibatis.logging.nologging.NoLoggingImpl
+    # 默认日志输出 org.apache.ibatis.logging.slf4j.Slf4jImpl
+    logImpl: org.apache.ibatis.logging.nologging.NoLoggingImpl
   global-config:
     #逻辑删除
     dbConfig:

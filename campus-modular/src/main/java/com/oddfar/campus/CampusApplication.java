@@ -11,6 +11,7 @@ public class CampusApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CampusApplication.class, args);
+        System.out.println("(♥◠‿◠)ﾉﾞ  启动成功   ლ(´ڡ`ლ)ﾞ");
     }
 
 }
