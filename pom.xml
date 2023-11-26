@@ -36,7 +36,6 @@
         <kaptcha.version>2.3.2</kaptcha.version>
         <jwt.version>0.9.1</jwt.version>
         <poi.version>4.1.2</poi.version>
-        <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
         <sunmail.version>1.6.2</sunmail.version>
         <p6spy.spring.boot>1.8.1</p6spy.spring.boot>
         <!-- 插件版本 -->
@@ -83,14 +82,7 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.boot.version}</version>
             </dependency>
-
-            <!-- mybatis pagehelper 分页插件 -->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper.boot.version}</version>
-            </dependency>
-
+            
             <!-- sql性能分析插件 -->
             <dependency>
                 <groupId>p6spy</groupId>

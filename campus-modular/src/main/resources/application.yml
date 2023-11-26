@@ -74,9 +74,6 @@ mybatis-plus:
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   # 实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.oddfar.**.domain
-  #mybatis-plus日志
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   configuration:
     # 自动驼峰命名规则（camel case）映射
     mapUnderscoreToCamelCase: true
@@ -97,10 +94,6 @@ mybatis-plus:
       logic-not-delete-value: 0
 
 
-# PageHelper分页插件
-pagehelper:
-  helperDialect: mysql
-  support-methods-arguments: false
 
 # Swagger配置
 swagger:
