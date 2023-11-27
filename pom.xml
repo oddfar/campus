@@ -9,9 +9,9 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>campus</name>
-    <url>http://campus.oddfar.com</url>
-    <description>校园信息墙</description>
+    <name>Campus</name>
+    <url>https://github.com/oddfar/campus</url>
+    <description>Campus一款简单的后台管理系统，RuoYi-Vue简单版，快速开发框架，适合大学生开发毕设，或其他小项目。</description>
 
     <modules>
         <module>campus-common</module>
@@ -21,7 +21,7 @@
     </modules>
 
     <properties>
-        <revision>1.1.6</revision>
+        <revision>1.1.7</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <bitwalker.version>1.21</bitwalker.version>
