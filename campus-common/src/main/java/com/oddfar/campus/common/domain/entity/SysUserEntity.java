@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 用户对象 sys_user
  *
- * @author 致远 oddfar@163.com
+ * @author oddfar
  * @since 1.0.0 2022-09-24
  */
 
