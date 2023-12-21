@@ -33,7 +33,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://gitee.com/y_project/RuoYi-Vue.git"
+    "url": "https://gitee.com/oddfar/campus.git"
   },
   "dependencies": {
     "@riophae/vue-treeselect": "0.4.0",
