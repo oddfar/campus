@@ -12,13 +12,16 @@ import org.apache.ibatis.annotations.Param;
 public interface SysUserMapper extends BaseMapperX<SysUserEntity> {
 
     default PageResult<SysUserEntity> selectPage(SysUserEntity user) {
+        LambdaQueryWrapperX<SysUserEntity> lqw = new LambdaQueryWrapperX<>();
+        lqw.select(SysUserEntity.class, i -> !i.getProperty().equals("password"));
 
-        return selectPage(new LambdaQueryWrapperX<SysUserEntity>()
-                .likeIfPresent(SysUserEntity::getUserName, user.getUserName())
-                .likeIfPresent(SysUserEntity::getPhonenumber, user.getPhonenumber())
-                .eqIfPresent(SysUserEntity::getStatus, user.getStatus())
-                .betweenIfPresent(SysUserEntity::getCreateTime, user.getParams())
-        );
+        lqw.likeIfPresent(SysUserEntity::getUserName, user.getUserName());
+        lqw.likeIfPresent(SysUserEntity::getPhonenumber, user.getPhonenumber());
+        lqw.eqIfPresent(SysUserEntity::getStatus, user.getStatus());
+        lqw.betweenIfPresent(SysUserEntity::getCreateTime, user.getParams());
+
+
+        return selectPage(lqw);
     }
 
 

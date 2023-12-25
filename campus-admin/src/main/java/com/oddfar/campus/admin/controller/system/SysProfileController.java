@@ -10,6 +10,7 @@ import com.oddfar.campus.common.utils.StringUtils;
 import com.oddfar.campus.framework.api.file.FileUploadUtils;
 import com.oddfar.campus.framework.api.file.MimeTypeUtils;
 import com.oddfar.campus.framework.api.sysconfig.ConfigExpander;
+import com.oddfar.campus.framework.mapper.SysUserMapper;
 import com.oddfar.campus.framework.service.SysUserService;
 import com.oddfar.campus.framework.web.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ import static com.oddfar.campus.common.utils.SecurityUtils.getLoginUser;
 public class SysProfileController {
     @Autowired
     private SysUserService userService;
+    @Autowired
+    private SysUserMapper userMapper;
 
     @Autowired
     private TokenService tokenService;
@@ -79,7 +82,7 @@ public class SysProfileController {
      */
     @PutMapping(value = "/updatePwd", name = "个人信息管理-重置密码")
     public R updatePwd(String oldPassword, String newPassword) {
-        SysUserEntity user = userService.selectUserById(SecurityUtils.getUserId());
+        SysUserEntity user = userMapper.selectById(SecurityUtils.getUserId());
 //        LoginUser loginUser = getLoginUser();
         String userName = user.getUserName();
         String password = user.getPassword();
