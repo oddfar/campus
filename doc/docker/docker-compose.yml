@@ -59,7 +59,7 @@ services:
     network_mode: "host"
 
   campus-server:
-    image: campus/campus-server:1.1.8
+    image: campus/campus-server:1.1.9
     container_name: campus-server
     environment:
       # 时区上海
