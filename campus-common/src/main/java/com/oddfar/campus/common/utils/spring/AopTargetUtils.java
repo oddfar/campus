@@ -35,7 +35,7 @@ import java.lang.reflect.Field;
  * 获取代理原始对象的工具
  *
  * @author fengshuonan
- * @date 2020/10/19 16:20
+ * @since 2020/10/19 16:20
  */
 @Slf4j
 public class AopTargetUtils {
@@ -44,7 +44,7 @@ public class AopTargetUtils {
      * 获取代理对象的原始对象
      *
      * @author fengshuonan
-     * @date 2020/10/19 16:21
+     * @since 2020/10/19 16:21
      */
     public static Object getTarget(Object proxy) {
 
@@ -70,7 +70,7 @@ public class AopTargetUtils {
      * 获取cglib代理的对象
      *
      * @author fengshuonan
-     * @date 2020/10/19 16:21
+     * @since 2020/10/19 16:21
      */
     private static Object getCglibProxyTargetObject(Object proxy) throws Exception {
         Field h = proxy.getClass().getDeclaredField("CGLIB$CALLBACK_0");
@@ -85,7 +85,7 @@ public class AopTargetUtils {
      * 获取jdk代理的对象
      *
      * @author fengshuonan
-     * @date 2020/10/19 16:22
+     * @since 2020/10/19 16:22
      */
     private static Object getJdkDynamicProxyTargetObject(Object proxy) throws Exception {
         Field h = proxy.getClass().getSuperclass().getDeclaredField("h");

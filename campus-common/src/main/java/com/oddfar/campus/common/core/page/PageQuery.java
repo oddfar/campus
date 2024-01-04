@@ -19,7 +19,7 @@ import java.util.List;
  * 分页查询实体类
  *
  * @author oddfar
- * @date 2023/11/26
+ * @since 2023/11/26
  */
 @Data
 public class PageQuery implements Serializable {

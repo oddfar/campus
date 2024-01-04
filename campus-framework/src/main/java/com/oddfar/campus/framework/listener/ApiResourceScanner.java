@@ -216,7 +216,7 @@ public class ApiResourceScanner implements BeanPostProcessor {
      * 调用注解上的某个方法，并获取结果
      *
      * @author fengshuonan
-     * @date 2020/12/8 17:13
+     * @since 2020/12/8 17:13
      */
     private <T> T invokeAnnotationMethod(Annotation apiResource, String methodName, Class<T> resultType) {
         try {
