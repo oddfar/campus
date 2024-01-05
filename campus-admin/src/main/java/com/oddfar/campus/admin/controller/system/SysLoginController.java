@@ -1,6 +1,7 @@
 package com.oddfar.campus.admin.controller.system;
 
 import com.oddfar.campus.common.annotation.ApiResource;
+import com.oddfar.campus.common.annotation.Log;
 import com.oddfar.campus.common.constant.Constants;
 import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.domain.entity.SysMenuEntity;

@@ -1,6 +1,7 @@
 package com.oddfar.campus.framework.aspectj;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson2.JSON;
 import com.oddfar.campus.common.annotation.ApiResource;
 import com.oddfar.campus.common.annotation.Log;
@@ -13,8 +14,6 @@ import com.oddfar.campus.common.utils.ServletUtils;
 import com.oddfar.campus.common.utils.StringUtils;
 import com.oddfar.campus.common.utils.ip.IpUtils;
 import com.oddfar.campus.framework.api.sysconfig.ConfigExpander;
-import com.oddfar.campus.framework.manager.AsyncFactory;
-import com.oddfar.campus.framework.manager.AsyncManager;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -185,7 +184,7 @@ public class LogAspect {
             getControllerMethodDescription(joinPoint, operLog, jsonResult);
             operLog.setOperTime(new Date());
             // 保存数据库
-            AsyncManager.me().execute(AsyncFactory.recordOper(operLog));
+            SpringUtil.getApplicationContext().publishEvent(operLog);
         } catch (Exception exp) {
             // 记录本地异常日志
             log.error("==前置通知异常==");

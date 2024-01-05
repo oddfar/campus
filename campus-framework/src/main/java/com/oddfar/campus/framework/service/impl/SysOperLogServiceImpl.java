@@ -4,6 +4,8 @@ import com.oddfar.campus.common.domain.PageResult;
 import com.oddfar.campus.common.domain.entity.SysOperLogEntity;
 import com.oddfar.campus.framework.mapper.SysOperLogMapper;
 import com.oddfar.campus.framework.service.SysOperLogService;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,6 +18,17 @@ import java.util.List;
 public class SysOperLogServiceImpl implements SysOperLogService {
     @Resource
     private SysOperLogMapper operLogMapper;
+
+    /**
+     * 操作日志记录
+     *
+     * @param operLog 操作日志信息
+     */
+    @Async
+    @EventListener
+    public void recordOper(SysOperLogEntity operLog) {
+        insertOperlog(operLog);
+    }
 
     /**
      * 新增操作日志

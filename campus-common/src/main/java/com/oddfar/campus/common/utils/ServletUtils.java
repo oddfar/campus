@@ -77,9 +77,12 @@ public class ServletUtils {
     /**
      * 获取request
      */
-    public static HttpServletRequest getRequest2()
-    {
-        return getRequestAttributes().getRequest();
+    public static HttpServletRequest getRequest2() {
+        try {
+            return getRequestAttributes().getRequest();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**

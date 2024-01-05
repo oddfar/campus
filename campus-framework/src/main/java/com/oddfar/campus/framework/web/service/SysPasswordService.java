@@ -1,15 +1,11 @@
 package com.oddfar.campus.framework.web.service;
 
 import com.oddfar.campus.common.constant.CacheConstants;
-import com.oddfar.campus.common.constant.Constants;
 import com.oddfar.campus.common.core.RedisCache;
 import com.oddfar.campus.common.domain.entity.SysUserEntity;
 import com.oddfar.campus.common.exception.user.UserPasswordNotMatchException;
 import com.oddfar.campus.common.exception.user.UserPasswordRetryLimitExceedException;
-import com.oddfar.campus.common.utils.MessageUtils;
 import com.oddfar.campus.common.utils.SecurityUtils;
-import com.oddfar.campus.framework.manager.AsyncFactory;
-import com.oddfar.campus.framework.manager.AsyncManager;
 import com.oddfar.campus.framework.security.context.AuthenticationContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,16 +51,13 @@ public class SysPasswordService {
             retryCount = 0;
         }
 
+
         if (retryCount >= Integer.valueOf(maxRetryCount).intValue()) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, null, Constants.LOGIN_FAIL,
-                    MessageUtils.message("user.password.retry.limit.exceed", maxRetryCount, lockTime)));
             throw new UserPasswordRetryLimitExceedException(maxRetryCount, lockTime);
         }
 
         if (!matches(user, password)) {
             retryCount = retryCount + 1;
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, null, Constants.LOGIN_FAIL,
-                    MessageUtils.message("user.password.retry.limit.count", retryCount)));
             redisCache.setCacheObject(getCacheKey(username), retryCount, lockTime, TimeUnit.MINUTES);
             throw new UserPasswordNotMatchException();
         } else {

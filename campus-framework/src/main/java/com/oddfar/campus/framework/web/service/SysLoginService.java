@@ -1,19 +1,22 @@
 package com.oddfar.campus.framework.web.service;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.oddfar.campus.common.constant.CacheConstants;
 import com.oddfar.campus.common.constant.Constants;
 import com.oddfar.campus.common.core.RedisCache;
 import com.oddfar.campus.common.domain.entity.SysUserEntity;
+import com.oddfar.campus.common.domain.event.LogininforEvent;
 import com.oddfar.campus.common.domain.model.LoginUser;
 import com.oddfar.campus.common.exception.ServiceException;
+import com.oddfar.campus.common.exception.user.CaptchaException;
+import com.oddfar.campus.common.exception.user.CaptchaExpireException;
+import com.oddfar.campus.common.exception.user.UserPasswordNotMatchException;
 import com.oddfar.campus.common.utils.MessageUtils;
 import com.oddfar.campus.common.utils.ServletUtils;
 import com.oddfar.campus.common.utils.StringUtils;
 import com.oddfar.campus.common.utils.ip.IpUtils;
 import com.oddfar.campus.common.utils.web.WebFrameworkUtils;
-import com.oddfar.campus.framework.manager.AsyncFactory;
-import com.oddfar.campus.framework.manager.AsyncManager;
 import com.oddfar.campus.framework.security.context.AuthenticationContextHolder;
 import com.oddfar.campus.framework.service.SysConfigService;
 import com.oddfar.campus.framework.service.SysUserService;
@@ -73,11 +76,21 @@ public class SysLoginService {
         } catch (Exception e) {
             if (e instanceof BadCredentialsException) {
                 //异步执行->保存登录信息
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, null, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
-                throw new ServiceException("账号或密码错误");
+                LogininforEvent logininforEvent = new LogininforEvent();
+                logininforEvent.setUsername(username);
+                logininforEvent.setStatus(Constants.LOGIN_FAIL);
+                logininforEvent.setMessage(MessageUtils.message("user.password.not.match"));
+                logininforEvent.setRequest(ServletUtils.getRequest2());
+                SpringUtil.getApplicationContext().publishEvent(logininforEvent);
+                throw new UserPasswordNotMatchException();
             } else {
                 //异步执行->登录信息
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, null, Constants.LOGIN_FAIL, e.getMessage()));
+                LogininforEvent logininforEvent = new LogininforEvent();
+                logininforEvent.setUsername(username);
+                logininforEvent.setStatus(Constants.LOGIN_FAIL);
+                logininforEvent.setMessage(e.getMessage());
+                logininforEvent.setRequest(ServletUtils.getRequest2());
+                SpringUtil.getApplicationContext().publishEvent(logininforEvent);
                 e.printStackTrace();
                 throw new ServiceException(e.getMessage());
             }
@@ -85,12 +98,10 @@ public class SysLoginService {
             AuthenticationContextHolder.clearContext();
         }
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        //异步记录登录成功日志
-        AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, loginUser.getUserId(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         // 额外设置到 request 中，有的过滤器在 Spring Security 之前
         WebFrameworkUtils.setLoginUserId(ServletUtils.getRequest(), loginUser.getUserId());
         //记录登录信息
-        recordLoginInfo(loginUser.getUserId());
+        recordLoginInfo(username, loginUser.getUserId(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success"));
         // 生成token
         return tokenService.createToken(loginUser);
     }
@@ -108,25 +119,31 @@ public class SysLoginService {
         String captcha = redisCache.getCacheObject(verifyKey);
         redisCache.deleteObject(verifyKey);
         if (captcha == null) {
-//            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
-            throw new ServiceException("验证码失效");
+            throw new CaptchaExpireException();
         }
         if (!code.equalsIgnoreCase(captcha)) {
-//            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error")));
-            throw new ServiceException("验证码错误");
+            throw new CaptchaException();
         }
     }
 
     /**
-     * 记录登录信息
+     * 更新登录信息
      *
      * @param userId 用户ID
      */
-    public void recordLoginInfo(Long userId) {
+    public void recordLoginInfo(String username, Long userId, String status, String message) {
         SysUserEntity sysUser = new SysUserEntity();
         sysUser.setUserId(userId);
         sysUser.setLoginIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         sysUser.setLoginDate(DateUtil.date());
         userService.updateUserProfile(sysUser);
+        //异步记录登录成功日志
+        LogininforEvent logininforEvent = new LogininforEvent();
+        logininforEvent.setUsername(username);
+        logininforEvent.setUserId(userId);
+        logininforEvent.setStatus(status);
+        logininforEvent.setMessage(message);
+        logininforEvent.setRequest(ServletUtils.getRequest2());
+        SpringUtil.getApplicationContext().publishEvent(logininforEvent);
     }
 }
