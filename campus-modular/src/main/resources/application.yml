@@ -22,6 +22,8 @@ spring:
       max-request-size: 20MB
   #MyWebMvcConfig中开启@EnableWebMvc则失效
   mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
     format:
       date-time: yyyy-MM-dd HH:mm:ss
   jackson:
@@ -99,4 +101,13 @@ mybatis-plus:
 swagger:
   # 是否开启swagger
   enabled: true
+
+# 全局线程池相关配置
+thread-pool:
+  # 是否开启线程池
+  enabled: false
+  # 队列最大长度
+  queueCapacity: 128
+  # 线程池维护线程所允许的空闲时间
+  keepAliveSeconds: 300
 

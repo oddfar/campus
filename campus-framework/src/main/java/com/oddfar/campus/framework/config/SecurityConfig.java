@@ -1,5 +1,6 @@
 package com.oddfar.campus.framework.config;
 
+import com.oddfar.campus.common.utils.SpringUtils;
 import com.oddfar.campus.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.oddfar.campus.framework.security.handle.AuthenticationEntryPointImpl;
 import com.oddfar.campus.framework.security.handle.LogoutSuccessHandlerImpl;
@@ -59,11 +60,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CorsFilter corsFilter;
 
-    /**
-     * 允许匿名访问的地址
-     */
-    @Autowired
-    private PermitAllUrlProperties permitAllUrl;
 
     /**
      * 解决 无法直接注入 AuthenticationManager
@@ -96,6 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // 注解标记允许匿名访问的url
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
+        PermitAllUrlProperties permitAllUrl = SpringUtils.getBean(PermitAllUrlProperties.class);
         permitAllUrl.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
 
         httpSecurity
