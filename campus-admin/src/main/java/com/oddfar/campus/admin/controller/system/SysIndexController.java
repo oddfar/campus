@@ -1,6 +1,6 @@
 package com.oddfar.campus.admin.controller.system;
 
-import com.oddfar.campus.common.config.CampusConfig;
+import com.oddfar.campus.common.config.properties.CampusConfig;
 import com.oddfar.campus.common.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

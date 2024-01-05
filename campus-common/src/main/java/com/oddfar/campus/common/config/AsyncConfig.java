@@ -1,10 +1,10 @@
-package com.oddfar.campus.framework.config;
+package com.oddfar.campus.common.config;
 
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.oddfar.campus.common.exception.ServiceException;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.Executor;
  * @author Lion Li
  */
 @EnableAsync(proxyTargetClass = true)
-@Configuration
+@AutoConfiguration
 public class AsyncConfig implements AsyncConfigurer {
 
     /**

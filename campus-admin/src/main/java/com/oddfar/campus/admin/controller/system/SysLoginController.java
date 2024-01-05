@@ -1,7 +1,6 @@
 package com.oddfar.campus.admin.controller.system;
 
 import com.oddfar.campus.common.annotation.ApiResource;
-import com.oddfar.campus.common.annotation.Log;
 import com.oddfar.campus.common.constant.Constants;
 import com.oddfar.campus.common.domain.R;
 import com.oddfar.campus.common.domain.entity.SysMenuEntity;
@@ -13,13 +12,15 @@ import com.oddfar.campus.framework.service.SysMenuService;
 import com.oddfar.campus.framework.web.service.SysLoginService;
 import com.oddfar.campus.framework.web.service.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping
 @ApiResource(name = "登录路由", resBizType = ResBizTypeEnum.SYSTEM)
 public class SysLoginController {
 

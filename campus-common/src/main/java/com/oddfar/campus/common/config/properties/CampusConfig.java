@@ -1,4 +1,4 @@
-package com.oddfar.campus.common.config;
+package com.oddfar.campus.common.config.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

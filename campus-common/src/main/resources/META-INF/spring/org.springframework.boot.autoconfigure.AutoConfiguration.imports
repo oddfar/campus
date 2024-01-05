@@ -1,0 +1,4 @@
+com.oddfar.campus.common.config.ThreadPoolConfig
+com.oddfar.campus.common.config.properties.CampusConfig
+com.oddfar.campus.common.config.AsyncConfig
+com.oddfar.campus.common.config.ApplicationConfig
