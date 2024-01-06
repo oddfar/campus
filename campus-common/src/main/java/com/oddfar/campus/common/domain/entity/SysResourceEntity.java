@@ -8,9 +8,6 @@ import com.oddfar.campus.common.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("sys_resource")
@@ -46,7 +43,7 @@ public class SysResourceEntity extends BaseEntity {
     private String methodName;
 
     /**
-     * 资源模块编码，一般为控制器类名排除Controller
+     * 资源模块编码，一般为控制器类名，名称替换Controller为空
      */
     @TableField(exist = false)
     private String  modular_code;
@@ -76,9 +73,4 @@ public class SysResourceEntity extends BaseEntity {
      */
     private String requiredPermissionFlag;
 
-    /**
-     * 子菜单
-     */
-    @TableField(exist = false)
-    private List<SysResourceEntity> children = new ArrayList<SysResourceEntity>();
 }
