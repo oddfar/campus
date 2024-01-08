@@ -70,6 +70,13 @@ public class R extends HashMap<String, Object> {
         return r;
     }
 
+    public static R ok(String msg, Object data) {
+        R r = new R();
+        r.put("msg", msg);
+        r.put("data", data);
+        return r;
+    }
+
     public static R ok(Object data) {
         R r = new R();
         r.put("data", data);
