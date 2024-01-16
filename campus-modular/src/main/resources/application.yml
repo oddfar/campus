@@ -4,6 +4,10 @@ campus:
   name: oddfar-campus
   # 版本
   version: ${revision}
+  # 获取ip地址开关
+  addressEnabled: true
+  # ip地址在线查询开关: false：使用离线，true：在线查询
+  ipOnlineEnable: false
 
 server:
   port: 8160

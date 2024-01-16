@@ -83,6 +83,12 @@
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- 离线IP地址定位库 -->
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+        </dependency>
+
         <!--fastjson-->
         <dependency>
             <groupId>com.alibaba.fastjson2</groupId>
