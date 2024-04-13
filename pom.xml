@@ -243,5 +243,18 @@
         </resources>
     </build>
 
+    <!-- 配置 Maven 源，提升下载速度 -->
+    <repositories>
+        <repository>
+            <id>huaweicloud</id>
+            <name>huawei</name>
+            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+        </repository>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+    </repositories>
 
 </project>
