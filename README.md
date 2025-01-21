@@ -112,3 +112,4 @@
 特别感谢 [JetBrains](https://www.jetbrains.com/?from=campus) 为开源项目提供免费的 [IntelliJ IDEA](https://www.jetbrains.com/idea/?from=campus) 等 IDE 的授权  
 [<img src=".github/jetbrains-variant.png" width="200"/>](https://www.jetbrains.com/?from=campus)
 
+[<img src="https://api.gitsponsors.com/api/badge/img?id=604413048" height="20">](https://api.gitsponsors.com/api/badge/link?p=niQ5QtMLM8j/pwmu1t7W/PukNq0DuMmxeh7jrYpEVXw8OxxqEiBr625efTYpF62ZYZsSv3UlE6J8ajT1/9Y4zXRfWKB//aiasNzIKMZoHF0+o5giGXeIJ3O//SM6Mi9cxbGNPczJ0fNgTh5ZnFo44Q==)
